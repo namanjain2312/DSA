@@ -1,0 +1,45 @@
+// Last Attempted On 26 Feb 2025
+class Solution {
+public:
+
+    int widthOfBinaryTree(TreeNode* root)
+    {
+        queue<pair<long long int,TreeNode*>> bfs;
+        TreeNode* temp = root;
+        long long int output=0,nodeValue=0,levelNodeCount=0,leftMostNodeCount=0,          rightMostNodeCount=0;
+        bfs.push({0,temp});
+        if(root==nullptr)
+            return 0;
+
+        while(bfs.size()>0)
+        {
+            levelNodeCount  = bfs.size();
+            leftMostNodeCount=0,rightMostNodeCount=0;
+
+            for(int i=0;i<levelNodeCount;i++)
+            {
+                temp = bfs.front().second;
+                nodeValue = bfs.front().first;
+                if(i==0)
+                {
+                    leftMostNodeCount = nodeValue;
+                }
+                else if(i==levelNodeCount-1)
+                {
+                    rightMostNodeCount = nodeValue;
+                }
+                if(temp->left!=nullptr)
+                    bfs.push({2*nodeValue-leftMostNodeCount,temp->left});
+                if(temp->right!=nullptr)
+                    bfs.push({2*nodeValue+1-leftMostNodeCount,temp->right});
+                bfs.pop();
+
+            }
+            output=std::max(output,rightMostNodeCount-leftMostNodeCount);
+
+        }
+
+        return output+1;
+
+    }
+};
