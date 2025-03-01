@@ -1,0 +1,24 @@
+class Solution {
+// Last Attempted On 26 Feb 2025
+// Brute Force : Sort the array and return n-k th element
+// Basic Approach : is to use a max heap , insert all the elements in the max heap
+// Then pop k-1 element from it , now return the topmost element of the heap
+// TC : O(n)*log(n) + O(k)*log(n)
+// SC : O(n)
+// Second Approach : would be always maitain heap size k and only maintain k elements ,
+// using min heap
+// Third approach : Use quick select algoritm
+// TC : O(n) average , O(n^2) worse
+// SC : O(1)
+
+
+public:
+    void quickSelectAlgo(int left,int right,vector<int>& nums)
+    {
+
+    }
+
+    int findKthLargest(vector<int>& nums, int k) {
+
+    }
+};

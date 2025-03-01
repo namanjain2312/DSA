@@ -1,0 +1,32 @@
+// Last Attempted On 26 Feb 2025
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        queue<TreeNode*>bfs;
+        vector<vector<int>> output;
+        TreeNode* node = root;
+        int levelSize = 0;
+        if(root==nullptr)
+            return output;
+        bfs.push(node);
+
+        while(!bfs.empty())
+        {
+            vector<int> v;
+            levelSize = bfs.size();
+            for(int i=0;i<levelSize;i++)
+            {
+                node = bfs.front();
+                v.push_back(node->val);
+                if(node->left!=nullptr)
+                    bfs.push(node->left);
+                if(node->right!=nullptr)
+                    bfs.push(node->right);
+                bfs.pop();
+            }
+            output.push_back(v);
+        }
+        return output;
+
+    }
+};
