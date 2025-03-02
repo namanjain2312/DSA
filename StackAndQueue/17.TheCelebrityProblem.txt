@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    int celebrity(vector<vector<int> >& mat) {
+        int output,start,end;
+        int n= mat.size();
+        start=0;
+        end = n-1;
+
+        while(start!=end && end>=start)
+        {
+            if(mat[start][end]==1&&mat[end][start]==0)
+                start++;
+            else if(mat[end][start]==1&&mat[start][end]==0)
+                end--;
+            else
+            {
+                start++;
+                end--;
+            }
+        }
+        //
+
+        for(int j=0;j<n;j++)
+        {
+            if(j!=start && mat[start][j]==1)
+                return -1;
+        }
+
+        for(int i=0;i<n;i++)
+        {
+            if(i!=start && mat[i][start]==0)
+                return -1;
+        }
+        return start;
+    }
+};

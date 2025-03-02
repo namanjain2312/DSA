@@ -1,0 +1,23 @@
+bool isValid(string s) {
+        stack<char> openBracket;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='('||s[i]=='['||s[i]=='{')
+                openBracket.push(s[i]);
+            else
+            {
+                if(openBracket.empty())
+                    return false;
+
+                if(s[i]==')'&&openBracket.top()=='(')
+                    openBracket.pop();
+                else if(s[i]==']'&&openBracket.top()=='[')
+                    openBracket.pop();
+                else if(s[i]=='}' && openBracket.top()=='{')
+                    openBracket.pop();
+                else
+                    return false;
+            }
+        }
+        return openBracket.empty();
+}

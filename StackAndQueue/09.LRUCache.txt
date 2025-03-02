@@ -1,0 +1,95 @@
+//Last Modified On 1 March 2025
+class LRUCache {
+public:
+
+    struct Node
+    {
+        Node* left=nullptr;
+        Node* right=nullptr;
+        int key;
+        int val;
+    };
+
+    map<int,Node*> m ;
+    int capacityOfCache = 0;
+    Node* start;
+    Node* end;
+
+    void AssigningNodeToEnd(Node* node)
+    {
+        node->right=end;
+        node->left=end->left;
+        end->left->right = node;
+        end->left=node;
+    }
+
+    void RemoveANode(Node* node)
+    {
+        node->left->right=node->right;
+        node->right->left=node->left;
+    }
+
+    void DeleteFirstNode()
+    {
+        Node* nodeToDelete;
+        nodeToDelete = start->right;
+        start->right = nodeToDelete->right;
+        nodeToDelete->right->left = start;
+        m.erase(nodeToDelete->key);
+        delete nodeToDelete;
+    }
+
+    LRUCache(int capacity) {
+
+        capacityOfCache = capacity;
+        for(auto i : m)
+        {
+            delete i.second;
+        }
+        m.clear();
+        start=new Node();
+        end=new Node();
+        start->right=end;
+        end->left=start;
+    }
+
+    int get(int key) {
+
+        if(m.find(key)!=m.end())
+        {
+            RemoveANode(m[key]);
+            //Assigning m[key] at last place
+            AssigningNodeToEnd(m[key]);
+            return m[key]->val;
+        }
+        else
+            return -1;
+    }
+
+    void put(int key, int value) {
+
+        if(m.find(key)!=m.end())
+        {
+            m[key]->val = value;
+            RemoveANode(m[key]);
+            AssigningNodeToEnd(m[key]);
+        }
+        else
+        {
+            if(m.size()==capacityOfCache)
+                DeleteFirstNode();
+            Node* tempNode = new Node();
+            tempNode->key = key;
+            tempNode->val = value;
+            m[key]=tempNode;
+            AssigningNodeToEnd(tempNode);
+        }
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */

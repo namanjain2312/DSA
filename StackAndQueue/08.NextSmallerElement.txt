@@ -1,0 +1,32 @@
+//Last Modified On 01 March 2025
+
+vector<int> Solution::prevSmaller(vector<int> &A)
+{
+    stack<int> s;
+    vector<int>output;
+
+    for(int i=0;i<A.size();i++)
+    {
+        while(true)
+        {
+            if(s.size()==0)
+            {
+                output.push_back(-1);
+                s.push(A[i]);
+                break;
+            }
+            else if(s.top()>=A[i])
+            {
+                s.pop();
+            }
+            else
+            {
+                output.push_back(s.top());
+                s.push(A[i]);
+                break;
+            }
+        }
+    }
+    return output;
+
+}
