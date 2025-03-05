@@ -1,0 +1,47 @@
+// Last Attempted On 05 March 2025
+class Solution {
+public:
+
+    bool hasDfsCycle(int src,vector<vector<int>> &adj,vector<int>&vis,vector<int>&dfsVis)
+    {
+        int curr;
+        dfsVis[src]=1;
+
+        if(vis[src]!=1)
+        {
+            vis[src]=1;
+            for(int i=0;i<adj[src].size();i++)
+            {
+                curr=adj[src][i];
+                if(dfsVis[curr]==1)
+                    return true;
+                else
+                {
+                    if(hasDfsCycle(curr,adj,vis,dfsVis)==true)
+                        return true;
+                }
+            }
+        }
+
+        dfsVis[src]=0;
+        return false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> vis(numCourses,0);
+        vector<vector<int>>adj(numCourses,vector<int>());
+        vector<int> dfsVis(numCourses,0);
+
+        for(int i=0;i<prerequisites.size();i++)
+            adj[prerequisites[i][0]].push_back(prerequisites[i][1]);
+
+        for(int i=0;i<numCourses;i++)
+        {
+            if(vis[i]==0)
+            {
+                if(hasDfsCycle(i,adj,vis,dfsVis)==true)
+                    return false;
+            }
+        }
+        return true;
+    }
+};

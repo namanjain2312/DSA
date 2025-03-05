@@ -1,0 +1,50 @@
+// Last Attempted On 05 March 2025
+//Problem Link to this question is wrong in the srtriver sheet
+//Correct Link - https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-an-undirected-graph
+class Solution {
+  public:
+    bool checkCycle(int src,vector<vector<int>> &adj,vector<int>&vis)
+    {
+        queue<pair<int,int>>q;
+        q.push({src,-1});
+        int node,parent,pointer;
+        vis[src]=1;
+
+        while(!q.empty())
+        {
+            node = q.front().first;
+            parent = q.front().second;
+            q.pop();
+            for(int i=0;i<adj[node].size();i++)
+            {
+                pointer = adj[node][i];
+                if(vis[pointer]==1)
+                {
+                    if(pointer!=parent)
+                        return true;
+                }
+                else
+                {
+                    vis[pointer]=1;
+                    q.push({pointer,node});
+                }
+            }
+        }
+        return false;
+    }
+    bool isCycle(vector<vector<int>>& adj) {
+
+        vector<int> vis(adj.size(),0);
+
+        for(int i=0;i<adj.size();i++)
+        {
+            if(vis[i]==0)
+            {
+                if(checkCycle(i,adj,vis)==true)
+                    return true;
+            }
+        }
+        return false;
+
+    }
+};
