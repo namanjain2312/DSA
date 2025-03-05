@@ -1,7 +1,8 @@
 //Last Modified On 4 March 2025
 //Not the most optimized solution
 //Try again in this Space complexity is O(n) , but this could be done in Space O(1)
-//Reach middle , reverse the second part of list and then traverse from start and //second part of link list and then compare
+//Reach middle , reverse the second part of list and then traverse from start and
+//second part of link list and then compare
 public:
     bool isPalindrome(ListNode* head) {
         stack<int>s;

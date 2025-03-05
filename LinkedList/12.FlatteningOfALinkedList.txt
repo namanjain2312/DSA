@@ -1,0 +1,36 @@
+//Last Modified On 4 March 2025
+//Not the most optimized solution
+//Try again in this Space complexity is O(n) , but this could be done in Space O(1)
+class Solution {
+  public:
+    // Function which returns the  root of the flattened linked list.
+    Node *flatten(Node *root) {
+        priority_queue<pair<int, Node*>, vector<pair<int, Node*>>, greater<pair<int, Node*>>> pq;
+
+        Node *tempNode = root;
+        Node *dummy = new Node(0);
+        Node *dummy1 = new Node(0);
+        dummy1=dummy;
+        while(tempNode!=nullptr)
+        {
+            pq.push({tempNode->data,tempNode});
+            tempNode=tempNode->next;
+        }
+        while(pq.size()>0)
+        {
+            tempNode = pq.top().second;
+            pq.pop();
+            if(tempNode->bottom!=nullptr)
+            {
+                pq.push({tempNode->bottom->data,tempNode->bottom});
+                tempNode->bottom=nullptr;
+            }
+            tempNode->next=nullptr;
+            dummy->bottom = tempNode;
+            dummy=dummy->bottom;
+        }
+        return dummy1->bottom;
+
+
+    }
+};

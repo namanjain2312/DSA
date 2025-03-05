@@ -1,0 +1,29 @@
+//Last Modified On 4 March 2025
+class Solution {
+  public:
+    // Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(vector<int>& val, vector<int>& wt, int capacity)
+    {
+        vector<pair<double,double>>v;
+        double out=0;
+        double cap = capacity;
+        int n=val.size();
+        int j=n-1;
+        for(int i=0;i<n;i++)
+        {
+            v.push_back({(double)val[i]/(double)wt[i],wt[i]});
+        }
+        sort(v.begin(),v.end());
+
+
+        while(true)
+        {
+            out=out+min(cap,v[j].second)*v[j].first;
+            cap = cap-min(cap,v[j].second);
+            j--;
+            if(cap==0||j==-1)
+                break;
+        }
+        return out;
+    }
+};

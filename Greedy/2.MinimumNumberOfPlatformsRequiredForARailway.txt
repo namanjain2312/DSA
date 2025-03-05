@@ -1,0 +1,37 @@
+//Last Modified On 4 March 2025
+//Nice conceptual question
+
+
+class Solution {
+  public:
+    // Function to find the minimum number of platforms required at the
+    // railway station such that no train waits.
+
+    int findPlatform(vector<int>& arr, vector<int>& dep) {
+        int count = 0,out=0,n=arr.size();
+        sort(arr.begin(),arr.end());
+        sort(dep.begin(),dep.end());
+        int i=0,j=0;
+
+        while(true)
+        {
+            if(i<n && j<n && arr[i]<=dep[j])
+            {
+                count++;
+                out=max(out,count);
+                i++;
+            }
+            else
+            {
+                count--;
+                j++;
+            }
+
+
+            if(i==n&&j==n)
+                break;
+        }
+        return out;
+
+    }
+};
