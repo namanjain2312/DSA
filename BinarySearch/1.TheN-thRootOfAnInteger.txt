@@ -1,0 +1,33 @@
+#include <math.h>
+double findRoot(double n,double m)
+{
+  double start=1,end=m,mid;
+
+  while(end>start && end-start>=pow(10,-3))
+  {
+    mid=(start+end)/2;
+    if(pow(mid,n)>m)
+    {
+      end=mid;
+    }
+    else if(pow(mid,n)<m)
+    {
+      start=mid;
+    }
+    else
+      return mid;
+    //cout<<start<<" "<<end<<"\n";
+  }
+  if(pow(floor(start),n)==m)
+    return floor(start);
+  else if(pow(floor(end),n)==m)
+    return floor(end);
+  else
+    return -1;
+}
+
+
+int NthRoot(int n, int m) {
+  return (int)findRoot(n,m);
+
+}
