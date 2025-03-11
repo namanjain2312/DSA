@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isHeightBalanced=true;
+
+    int checkHeightBalance(TreeNode *tempNode)
+    {
+        if(tempNode==nullptr)
+            return 0;
+        int leftHeight=0,rightHeight=0;
+
+        leftHeight=checkHeightBalance(tempNode->left);
+        rightHeight=checkHeightBalance(tempNode->right);
+
+        if(abs(leftHeight-rightHeight)>1)
+            isHeightBalanced=false;
+
+        return 1+max(leftHeight,rightHeight);
+    }
+    bool isBalanced(TreeNode* root) {
+        TreeNode *tempNode = root;
+        checkHeightBalance(tempNode);
+        return isHeightBalanced;
+    }
+};

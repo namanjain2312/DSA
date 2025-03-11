@@ -1,0 +1,19 @@
+class Solution {
+public:
+    TreeNode* bstSearch(TreeNode *node,int data)
+    {
+        if(node==nullptr)
+            return nullptr;
+        if(node->val==data)
+            return node;
+        else if(data<node->val)
+            return bstSearch(node->left,data);
+        else
+            return bstSearch(node->right,data);
+    }
+
+    TreeNode* searchBST(TreeNode* root, int val) {
+        TreeNode *tempNode = root;
+        return bstSearch(tempNode,val);
+    }
+};

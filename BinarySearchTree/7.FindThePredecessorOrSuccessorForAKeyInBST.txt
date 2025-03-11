@@ -1,0 +1,49 @@
+class Solution
+{
+    public:
+    Node *pred = nullptr;
+    Node *succes = nullptr;
+
+    void findPredecessor(Node* tempNode,int key)
+    {
+        if(tempNode==nullptr)
+            return ;
+        if(tempNode->key<key)
+        {
+            pred=tempNode;
+            return findPredecessor(tempNode->right,key);
+        }
+        else
+            return findPredecessor(tempNode->left,key);
+
+    }
+
+    void findSuccessor(Node* tempNode,int key)
+    {
+        if(tempNode==nullptr)
+            return ;
+
+        if(tempNode->key>key)
+        {
+            succes=tempNode;
+            return findSuccessor(tempNode->left,key);
+        }
+        else
+            return findSuccessor(tempNode->right,key);
+
+    }
+
+    void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+    {
+        Node* tempNode = root;
+        findPredecessor(tempNode,key);
+        tempNode = root;
+        findSuccessor(tempNode,key);
+
+
+
+        pre = pred;
+        suc=succes;
+
+    }
+};

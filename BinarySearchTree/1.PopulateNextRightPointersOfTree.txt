@@ -1,0 +1,35 @@
+//Last Modified On 11 March 2025
+//Approach could be more optmized also and we are using extra queue for stroing the element .
+
+class Solution {
+public:
+    Node* connect(Node* root)
+    {
+        Node *currNode,*nextNode;
+        int level;
+        queue<pair<Node*,int>> q;
+        currNode = root;
+        if(currNode!=nullptr)
+            q.push({currNode,0});
+
+        while(!q.empty())
+        {
+            currNode = q.front().first;
+            level = q.front().second;
+            q.pop();
+
+            if(!q.empty()&&q.front().second==level)
+                currNode->next=q.front().first;
+            else
+                currNode->next=nullptr;
+            if(currNode->left!=nullptr)
+                q.push({currNode->left,level+1});
+            if(currNode->right!=nullptr)
+                q.push({currNode->right,level+1});
+        }
+
+        return root;
+
+
+    }
+};

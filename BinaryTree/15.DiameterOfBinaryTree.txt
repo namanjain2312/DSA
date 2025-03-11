@@ -1,0 +1,26 @@
+// Last Attempted On 10 March 2025
+class Solution {
+public:
+    int maxValue=0;
+
+    int dfs(TreeNode *tempNode)
+    {
+        if(tempNode==nullptr)
+            return 0;
+        int leftHeight=0,rightHeight=0;
+
+        leftHeight = dfs(tempNode->left);
+        rightHeight = dfs(tempNode->right);
+
+        maxValue=max(maxValue,leftHeight+rightHeight);
+
+        return 1+max(leftHeight,rightHeight);
+    }
+
+    int diameterOfBinaryTree(TreeNode* root)
+    {
+        TreeNode *tempNode=root;
+        dfs(root);
+        return maxValue;
+    }
+};

@@ -1,0 +1,25 @@
+class Solution {
+public:
+    TreeNode *lcsNode = nullptr;
+
+    void lcs(TreeNode *tempNode,TreeNode* p, TreeNode* q)
+    {
+        if(tempNode==nullptr)
+            return ;
+        if((p->val<=tempNode->val && tempNode->val<=q->val) || (q->val<=tempNode->val && tempNode->val<=p->val))
+        {
+            lcsNode=tempNode;
+            return ;
+        }
+        else if(p->val<tempNode->val && q->val<tempNode->val)
+            return lcs(tempNode->left,p,q);
+        else
+            return lcs(tempNode->right,p,q);
+    }
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode *head=root;
+        lcs(head,p,q);
+        return lcsNode;
+    }
+};

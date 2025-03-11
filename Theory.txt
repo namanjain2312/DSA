@@ -9,3 +9,18 @@ In other words, you can reach any vertex from any other vertex by following the 
 Strongly Connected Component is a subset
 of vertices where every vertex in the subset is reachable from every other
 vertex in the same subset by traversing the directed edges.
+9>Linear Graph with no cycle are always bipartite graphs
+10>Any graph with even cycle lenght are  bipartite graphs
+11>Any graph with odd cycle lenght are not bipartite
+12>We cannot use dijiktra algortihm for the negative weights
+13>Bellman Ford is used for only directed graph , if we have been provided with a undirected graph ,
+then convert it into a directed graph
+14>Diff bw dijaktra and bellman ford is bellman ford can we implemented for negiative weightes and negative cyclw as well
+15>Perfect Binary Tree : where all leaves are on the same level, and every parent has two children.
+16>A height-balanced binary tree is a binary tree in which the depth of the
+two subtrees of every node never differs by more than one.
+17>A binary search tree is a binary tree where for every node, any descendant of Node.left
+has a value less than Node.val, and any descendant of Node.right has a value
+greater than Node.val
+18>InOrder Traversal of an BST is always a ascending array value
+19>

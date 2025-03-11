@@ -1,0 +1,27 @@
+class Solution {
+public:
+
+    int maxSum=INT_MIN;
+
+    int dfs(TreeNode *tempNode)
+    {
+        if(tempNode==nullptr)
+            return 0;
+
+        int left,right,currSum;
+        left=dfs(tempNode->left);
+        right=dfs(tempNode->right);
+
+        currSum = left + right +tempNode->val;
+        maxSum=max(maxSum,currSum);
+        currSum = max(0,max({0,left,right})+tempNode->val);
+        return currSum;
+    }
+
+    int maxPathSum(TreeNode* root) {
+        TreeNode *tempNode=root;
+        dfs(tempNode);
+        return maxSum;
+
+    }
+};
