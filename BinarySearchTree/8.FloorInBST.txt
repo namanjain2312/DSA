@@ -1,0 +1,25 @@
+int out=-1;
+void searchFloor(TreeNode<int> *tempNode,int X)
+{
+    if(tempNode==nullptr)
+        return ;
+
+    if(tempNode->val<=X && tempNode->val>out)
+        out=tempNode->val;
+
+    if(tempNode->val>=X)
+        return searchFloor(tempNode->left,X);
+    else
+        return searchFloor(tempNode->right,X);
+}
+
+
+int floorInBST(TreeNode<int> * root, int X)
+{
+    TreeNode<int> *tempNode = root;
+    out = -1;
+
+    searchFloor(root,X);
+
+    return out;
+}

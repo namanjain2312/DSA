@@ -1,4 +1,5 @@
 1>Which is faster BFS or DFS
-2>Ordered vs Unordered Map
+2>Ordered vs Unordered Map (There time complexity , working and when to use whcih , and syntax )
 3>6>this->c=c; meaning of this
-  7>How contructor and pointer works in c++ , deep down
+4>How contructor and pointer works in c++ , deep down
+5>

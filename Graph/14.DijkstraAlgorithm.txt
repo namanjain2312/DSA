@@ -1,0 +1,43 @@
+class Solution {
+  public:
+    // Function to find the shortest distance of all the vertices
+    // from the source vertex src.
+
+    struct comp {
+    bool operator()(const pair<int,int>& p1, const pair<int,int>& p2) {
+        return p1.first > p2.first;
+    }
+};
+
+    vector<int> dijkstra(vector<vector<pair<int, int>>> &adj, int src)
+    {
+        priority_queue<pair<int,int>,vector<pair<int,int>>,comp> pq;
+        int n=adj.size();
+        int curr,dist;
+
+        vector<int>vis(n,-1);
+        pq.push({0,src});
+
+        while(!pq.empty())
+        {
+            dist=pq.top().first;
+            curr=pq.top().second;
+            if(vis[curr]!=-1 && vis[curr]<=dist)
+            {
+                pq.pop();
+                continue;
+            }
+
+            vis[curr]=dist;
+
+            for(int i=0;i<adj[curr].size();i++)
+            {
+                pq.push({dist+adj[curr][i].second,adj[curr][i].first});
+            }
+            pq.pop();
+        }
+
+        return vis;
+
+    }
+};

@@ -1,0 +1,35 @@
+//Do approach hai iski , kisi bhi approach se kar sakhte ho
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target)
+    {
+        vector<pair<int,int>> sortedNum;
+        vector<int>out;
+        int n=nums.size();
+
+
+        for(int i=0;i<n;i++)
+            sortedNum.push_back({nums[i],i});
+
+
+        sort(sortedNum.begin(),sortedNum.end());
+
+        int start=0,end=nums.size()-1;
+
+        while(start<end)
+        {
+            if(sortedNum[start].first+sortedNum[end].first>target)
+                end--;
+            else if(sortedNum[start].first+sortedNum[end].first<target)
+                start++;
+            else
+            {
+                out.push_back(sortedNum[start].second);
+                out.push_back(sortedNum[end].second);
+                return out;
+            }
+        }
+        return out;
+    }
+};
