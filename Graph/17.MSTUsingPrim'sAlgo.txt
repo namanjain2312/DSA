@@ -1,0 +1,49 @@
+//
+
+class Solution {
+  public:
+    // Function to find sum of weights of edges of the Minimum Spanning Tree.
+
+    struct comp{
+        bool operator()(const vector<int>v1,vector<int>v2){
+            return v1[0]>v2[0];
+        }
+    };
+
+    int spanningTree(int V, vector<vector<int>> adj[])
+    {
+        int weight =0;
+        priority_queue<vector<int>,vector<vector<int>>,comp> pq; //dist , currNode, parent
+        vector<int>vis(V,0);
+        int curr,dist,parent;
+
+
+        pq.push({0,0,-1});
+
+        while(!pq.empty())
+        {
+            dist=pq.top()[0];
+            curr=pq.top()[1];
+            parent=pq.top()[2];
+
+            pq.pop();
+
+            if(vis[curr]==1)
+                continue;
+
+            vis[curr]=1;
+            weight=weight+dist;
+
+
+            for(int i=0;i<adj[curr].size();i++)
+            {
+                pq.push({adj[curr][i][1],adj[curr][i][0],curr});
+            }
+
+        }
+
+        return weight;
+
+
+    }
+};

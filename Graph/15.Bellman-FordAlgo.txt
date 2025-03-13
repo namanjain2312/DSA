@@ -1,0 +1,41 @@
+//If its undirected graph then convert in directed and then apply bellman ford
+//Negative cycle -  If a path weight < 0 then its called negative cycle graph
+//Works for non connected graph also
+
+
+class Solution {
+  public:
+    /*  Function to implement Bellman Ford
+     *   edges: vector of vectors which represents the graph
+     *   src: source vertex
+     *   V: number of vertices
+     */
+    vector<int> bellmanFord(int V, vector<vector<int>>& edges, int src)
+    {
+        vector<int>vis(V,100000000);
+        int n=0;
+        int start,end,dist;
+
+        vis[src]=0;
+
+        while(n<=V-1)
+        {
+            for(int i=0;i<edges.size();i++)
+            {
+                start=edges[i][0];
+                end=edges[i][1];
+                dist=edges[i][2];
+                if(((vis[start]+dist)<vis[end])&&vis[start]!=100000000)
+                {
+                    if(n==V-1)
+                        return vector<int>{-1};
+
+                    vis[end]=vis[start]+dist;
+                }
+            }
+            n++;
+        }
+
+        return vis;
+    }
+};

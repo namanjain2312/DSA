@@ -1,0 +1,39 @@
+//Works for directed graph and we will use adj matrix in it
+//If undirected graph given then convert it in directed graph
+//MutliSource Shortest Path Algo
+//It also helps to detect the negative cycle as well
+//To detect negative cycle if Cost[i][j] where i==j is not zero and <0 then its have negative cycle
+//as well
+//Acc to its : Go Via Every Node/Vertex in order to reach the answer
+//d[i][j] = max(d[i][k]+d[j][j])
+//So DP
+
+
+
+class Solution {
+  public:
+    void shortestDistance(vector<vector<int>>& mat) {
+
+        int n=mat.size();
+
+        for(int via=0;via<n;via++)
+        {
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    if (mat[i][via] != -1 && mat[via][j] != -1)
+                    {
+                        // If no direct path exists from i to j, update it
+                        if (mat[i][j] == -1)
+                            mat[i][j] = mat[i][via] + mat[via][j];
+                        else
+                            mat[i][j] = min(mat[i][j], mat[i][via] + mat[via][j]);
+                    }
+                }
+            }
+        }
+
+        return ;
+    }
+};

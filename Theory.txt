@@ -23,4 +23,11 @@ two subtrees of every node never differs by more than one.
 has a value less than Node.val, and any descendant of Node.right has a value
 greater than Node.val
 18>InOrder Traversal of an BST is always a ascending array value
-19>
+19>A spanning tree is defined as a tree-like subgraph of a connected,
+undirected graph that includes all the vertices of the graph. Or, to say in Layman’s words,
+it is a subset of the edges of the graph that forms a tree (acyclic) where every node of the
+ graph is a part of the tree.
+20>The minimum spanning tree has all the properties of a spanning tree with an added constraint of having the minimum possible weights
+among all possible spanning trees. Like a spanning tree, there can also be many possible MSTs
+for a graph.
+21>

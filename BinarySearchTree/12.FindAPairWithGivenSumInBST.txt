@@ -1,0 +1,65 @@
+//repetating things could be writeen in function
+
+
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k)
+    {
+        int sum;
+        stack<TreeNode*>left;
+        stack<TreeNode*>right;
+        TreeNode *leftCurr,*rightCurr;
+        TreeNode *tempNode = root;
+        leftCurr = root;
+        rightCurr=root;
+
+        while(leftCurr!=nullptr)
+        {
+            left.push(leftCurr);
+            leftCurr=leftCurr->left;
+        }
+
+        while(rightCurr!=nullptr)
+        {
+            right.push(rightCurr);
+            rightCurr=rightCurr->right;
+        }
+
+        while(left.top()->val<right.top()->val &&left.top()!=right.top() )
+        {
+            sum=left.top()->val+right.top()->val;
+            if(sum>k)
+            {
+                rightCurr=right.top();
+                right.pop();
+                rightCurr=rightCurr->left;
+                while(rightCurr!=nullptr)
+                {
+                    right.push(rightCurr);
+                    rightCurr=rightCurr->right;
+                }
+            }
+            else if(sum<k)
+            {
+                leftCurr=left.top();
+                left.pop();
+                leftCurr=leftCurr->right;
+                while(leftCurr!=nullptr)
+                {
+                    left.push(leftCurr);
+                    leftCurr=leftCurr->left;
+                }
+            }
+            if(sum==k)
+                return true;
+        }
+        return false;
+
+
+
+
+
+
+
+    }
+};
