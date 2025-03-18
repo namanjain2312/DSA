@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool checkBst(TreeNode *tempNode,long long upperBound,long long lowerBound)
+    {
+        if(tempNode==nullptr)
+            return true;
+
+        if(tempNode->val<upperBound && tempNode->val>lowerBound &&checkBst(tempNode->left,tempNode->val,lowerBound) && checkBst(tempNode->right,upperBound,tempNode->val))
+            return true;
+        else
+            return false;
+    }
+
+    bool isValidBST(TreeNode* root) {
+        return checkBst(root,LLONG_MAX,LLONG_MIN);
+    }
+};

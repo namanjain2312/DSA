@@ -1,0 +1,26 @@
+class Solution {
+public:
+
+    vector<int> generateRows(int n)
+    {
+        vector<int>out;
+        int ans=1;
+        out.push_back(ans);
+        for(int i=1;i<n;i++)
+        {
+            ans=(ans*(n-i))/i;
+            out.push_back(ans);
+        }
+        return out;
+    }
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>>result;
+
+        for(int i=1;i<=numRows;i++)
+        {
+            result.push_back(generateRows(i));
+        }
+        return result;
+
+    }
+};

@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        stack<TreeNode*>s;
+        int out;
+        int count=0;
+        TreeNode *tempNode=root;
+
+        while(tempNode!=nullptr)
+        {
+            s.push(tempNode);
+            tempNode = tempNode->left;
+        }
+
+        while(true)
+        {
+            count++;
+            tempNode = s.top();
+            out=tempNode->val;
+            s.pop();
+
+            tempNode=tempNode->right;
+            while(tempNode!=nullptr)
+            {
+                s.push(tempNode);
+                tempNode = tempNode->left;
+            }
+            if(count==k)
+                return out;
+        }
+
+    }
+};

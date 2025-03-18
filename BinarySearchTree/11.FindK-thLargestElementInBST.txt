@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    int kthLargest(Node *root, int k) {
+        stack<Node*>s;
+        int out;
+        int count=0;
+        Node *tempNode=root;
+
+        while(tempNode!=nullptr)
+        {
+            s.push(tempNode);
+            tempNode = tempNode->right;
+        }
+
+        while(true)
+        {
+            count++;
+            tempNode = s.top();
+            out=tempNode->data;
+            s.pop();
+
+            tempNode=tempNode->left;
+            while(tempNode!=nullptr)
+            {
+                s.push(tempNode);
+                tempNode = tempNode->right;
+            }
+            if(count==k)
+                return out;
+        }
+    }
+};
