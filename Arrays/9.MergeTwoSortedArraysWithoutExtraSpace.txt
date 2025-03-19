@@ -1,0 +1,80 @@
+class Solution {
+public:
+
+
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+
+       // Pointers for nums1, nums2, and the position to place the next element
+        int p1 = m - 1;
+        int p2 = n - 1;
+        int p = m + n - 1; // Start placing elements from the end of nums1
+
+        // While both arrays still have elements
+        while (p1 >= 0 && p2 >= 0) {
+            if (nums1[p1] > nums2[p2]) {
+                nums1[p] = nums1[p1];
+                p1--;
+            } else {
+                nums1[p] = nums2[p2];
+                p2--;
+            }
+            p--;
+        }
+
+        // If there are still elements left in nums2, copy them over
+        while (p2 >= 0) {
+            nums1[p] = nums2[p2];
+            p2--;
+            p--;
+        }
+
+    }
+};
+
+
+
+//Gap Method in case of standard quest
+// It will return the array in format , arr1[] will have all elements smaller than arr2 all element and both would be in sorted order.
+
+
+
+void swapIfGreater(long long arr1[], long long arr2[], int ind1, int ind2) {
+    if (arr1[ind1] > arr2[ind2]) {
+        swap(arr1[ind1], arr2[ind2]);
+    }
+}
+
+void merge(long long arr1[], long long arr2[], int n, int m) {
+    // len of the imaginary single array:
+    int len = n + m;
+
+    // Initial gap:
+    int gap = (len / 2) + (len % 2);
+
+    while (gap > 0) {
+        // Place 2 pointers:
+        int left = 0;
+        int right = left + gap;
+        while (right < len) {
+            // case 1: left in arr1[]
+            //and right in arr2[]:
+            if (left < n && right >= n) {
+                swapIfGreater(arr1, arr2, left, right - n);
+            }
+            // case 2: both pointers in arr2[]:
+            else if (left >= n) {
+                swapIfGreater(arr2, arr2, left - n, right - n);
+            }
+            // case 3: both pointers in arr1[]:
+            else {
+                swapIfGreater(arr1, arr1, left, right);
+            }
+            left++, right++;
+        }
+        // break if iteration gap=1 is completed:
+        if (gap == 1) break;
+
+        // Otherwise, calculate new gap:
+        gap = (gap / 2) + (gap % 2);
+    }
+}

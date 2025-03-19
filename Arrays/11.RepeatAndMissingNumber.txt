@@ -1,0 +1,38 @@
+#define ll           long long
+vector<int> Solution::repeatedNumber(const vector<int> &A)
+{
+    ll sum_0=0,sum_1=0,ssum_0=0,ssum_1=0,i,j,diff,x,y,temp;
+    for(i=1;i<=A.size();i++)
+    {
+        sum_0=sum_0+i;
+        ssum_0=ssum_0+i*i;
+        temp=A[i-1];
+        sum_1=sum_1+temp;
+
+        ssum_1=ssum_1+temp*temp;
+    }
+    diff=sum_1-sum_0;
+    x=((ssum_1-ssum_0)/diff+diff)/2;
+    y=x-diff;
+    vector<int>v;
+    v.push_back(x);
+    v.push_back(y);
+    return v;
+
+    //b-a = sum-sumOfFirstNNumber
+    //b^2 - a^2 = sumOfSquare - sumOfSquareOfFirstNNumber;
+    //(b-a)(b+a) = sumOfSquare - sumOfSquareOfFirstNNumber;
+    //b+a = (sumOfSquare - sumOfSquareOfFirstNNumber)/(sum-sumOfFirstNNumber);
+    //b = (sumOfSquare - sumOfSquareOfFirstNNumber)/((sum-sumOfFirstNNumber) * 2)
+    //diffOfSum = sum-sumOfFirstNNumber
+    // diffOfSum= (long long)sum-sumOfFirstNNumber;
+    // b= (long long)(diffOfSum + (sumOfSquare - sumOfSquareOfFirstNNumber)/diffOfSum)/2;
+    // a= (long long) b- diffOfSum;
+
+    // return vector<int>{(int)b,(int)a};
+
+
+
+
+
+}
