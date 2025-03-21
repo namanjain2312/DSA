@@ -1,0 +1,99 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+        int i;
+        int out=0;
+        string temp;
+        i=0;
+
+        while(i<s.size())
+        {
+            if(i<s.size()&&i+1<s.size())
+            {
+                temp="";
+                temp.push_back(s[i]);
+                temp.push_back(s[i+1]);
+                if(temp=="IV")
+                {
+                    out=out+4;
+                    i=i+2;
+                    continue;
+                }
+                else if(temp=="IX")
+                {
+                    out=out+9;
+                    i=i+2;
+                    continue;
+                }
+                else if(temp=="XL")
+                {
+                    out=out+40;
+                    i=i+2;
+                    continue;
+                }
+                else if(temp=="XC")
+                {
+                    out=out+90;
+                    i=i+2;
+                    continue;
+                }
+                else if(temp=="CD")
+                {
+                    out=out+400;
+                    i=i+2;
+                    continue;
+                }
+                else if(temp=="CM")
+                {
+                    out=out+900;
+                    i=i+2;
+                    continue;
+                }
+            }
+            if(s[i]=='I')
+            {
+                out=out+1;
+                i++;
+                continue;
+            }
+            else if(s[i]=='V')
+            {
+                out=out+5;
+                i++;
+                continue;
+            }
+            else if(s[i]=='X')
+            {
+                out=out+10;
+                i++;
+                continue;
+            }
+            else if(s[i]=='L')
+            {
+                out=out+50;
+                i++;
+                continue;
+            }
+            else if(s[i]=='C')
+            {
+                out=out+100;
+                i++;
+                continue;
+            }
+            else if(s[i]=='D')
+            {
+                out=out+500;
+                i++;
+                continue;
+            }
+            else if(s[i]=='M')
+            {
+                out=out+1000;
+                i++;
+                continue;
+            }
+        }
+        return out;
+    }
+
+};

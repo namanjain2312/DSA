@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        //Vaise to most optimized approach for a very large subset is trie
+        //But the second most optimized approach is to do the vertical scan
+        //And we will use vertical scan itself in this case
+
+        string out;
+        char c;
+        int index = 0;
+        bool errorFound = false;
+
+        while(true)
+        {
+            if(index<strs[0].size())
+                c=strs[0][index];
+            else
+                break;
+            for(int i=0;i<strs.size();i++)
+            {
+                if(index<strs[i].size() && strs[i][index]==c)
+                    ;
+                else
+                {
+                    errorFound = true;
+                }
+            }
+            if(errorFound==true)
+                break;
+            else
+                out.push_back(strs[0][index]);
+            index++;
+        }
+
+        return out;
+
+    }
+};
