@@ -1,0 +1,39 @@
+int Solution::solve(string A)
+{
+    int i,len,n;
+    string temp;
+
+    temp= A  +  "$" ;
+    reverse(A.begin(),A.end());
+    temp=temp+A;
+    n= temp.size();
+    vector<int>lps(n,0);
+
+    i=1;
+    len=0;
+    while(i<n)
+    {
+        if(temp[i]==temp[len])
+        {
+
+            len++;
+            lps[i]=len;
+            i++;
+        }
+        else
+        {
+            if(len!=0)
+            {
+                len=lps[len-1];
+            }
+            else
+            {
+                lps[i]=0;
+                i++;
+            }
+        }
+    }
+
+    return A.size()-lps[n-1];
+
+}

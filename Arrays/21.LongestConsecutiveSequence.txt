@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> s;
+        int n=nums.size();
+        int out=0;
+        int i=0;
+        int count=0;
+        int ele;
+
+        for(int i=0;i<n;i++)
+            s.insert(nums[i]);
+
+        //for(int i=0;i<n;i++) // Do not iterate over the original array , instead iterate over the set , as set have unique elements , if i iterate over original array then logic over duplicate elemetns will be executed again and again resulting in TLE
+        for(auto i : s)
+        {
+
+            if(s.find(i-1)==s.end())
+            {
+                count=1;
+                ele=i;
+
+                while(s.find(ele+1)!=s.end())
+                {
+                    count++;
+                    ele++;
+                }
+                out=max(out,count);
+            }
+        }
+        return out;
+    }
+};

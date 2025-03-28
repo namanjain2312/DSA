@@ -1,0 +1,66 @@
+class Solution {
+public:
+
+    // Function to compute the Longest Prefix Suffix (LPS) array
+vector<int> computeLPS(string &pattern) {
+    int m = pattern.size();
+    vector<int> lps(m, 0); // lps[0] is always 0
+    int len = 0;          // length of the previous longest prefix suffix
+    int i = 1;            // start from the second character
+
+    while (i < m) {
+        if (pattern[i] == pattern[len]) {
+            len++;
+            lps[i] = len;
+            i++;
+        } else {
+            if (len != 0) {
+                // Instead of starting over, use the previous LPS value
+                len = lps[len - 1];
+            } else {
+                // No match found, so set lps[i] to 0
+                lps[i] = 0;
+                i++;
+            }
+        }
+    }
+    return lps;
+}
+
+    int strStr(string haystack, string needle) {
+        int n=haystack.size(),m=needle.size();
+        vector<int>lps = computeLPS(needle);
+        vector<int>out;
+
+
+    int i = 0; // index for text
+    int j = 0; // index for pattern
+
+    while (i < n) {
+        if (needle[j] == haystack[i]) {
+            i++;
+            j++;
+        }
+
+        // If we found a complete match of the pattern
+        if (j == m) {
+            return i - j;
+            // Use the LPS array to continue searching for the next possible match
+            j = lps[j - 1];
+        }
+        // Mismatch after j matches
+        else if (i < n && needle[j] != haystack[i]) {
+            if (j != 0) {
+                j = lps[j - 1]; // Use LPS array to avoid redundant comparisons
+            } else {
+                i++; // Move to the next character in text
+            }
+        }
+    }
+
+    return -1;
+
+
+
+    }
+};

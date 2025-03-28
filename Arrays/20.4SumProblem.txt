@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target)
+    {
+        vector<vector<int>> out;
+        int i,j,k,l,n;
+        n=nums.size();
+        i=0;
+        sort(nums.begin(), nums.end());
+        while(i<n-3)
+        {
+            j=i+1;
+            while(j<n-2)
+            {
+                k=j+1;
+                l=n-1;
+
+                while(k<l)
+                {
+                    if((long long )nums[i]+nums[j] +nums[k] + nums[l]==(long long)target) //to avoid int overflow
+                    {
+                        out.push_back({nums[i],nums[j],nums[k],nums[l]});
+
+                        while(k+1<n-1 && nums[k]==nums[k+1])
+                            k++;
+                        k++;
+
+                        while(l-1>j&&nums[l-1]==nums[l])
+                            l--;
+                        l--;
+                    }
+                    else if((long long )nums[i]+nums[j]+nums[k]+nums[l]>(long long)target) //to avoid int overflow
+                        l--;
+                    else
+                        k++;
+                }
+
+                while(j+1<n-2 && nums[j]==nums[j+1])
+                    j++;
+                j++;
+            }
+            while(i+1<n-3 && nums[i]==nums[i+1])
+                i++;
+            i++;
+        }
+        return out;
+    }
+};
