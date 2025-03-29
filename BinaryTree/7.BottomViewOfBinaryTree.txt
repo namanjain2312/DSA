@@ -1,0 +1,45 @@
+// Last Attempted On 26 Feb 2025
+//Function to return a list containing the bottom view of the given tree.
+//It consists of two parameter , horizontal dist from root (centre node) ,
+//Depth of each node
+//For every horizontal dist we would have one answer and we would select the
+//depthmost answer in it ;
+//In this the depmost part would be automattically handled
+
+
+class Solution {
+  public:
+    vector <int> bottomView(Node *root)
+    {
+        vector<int>output;
+        Node* node = root;
+        int level;
+        map<int,Node*>horizontalDistantNode;
+        int breadth=0;
+        queue<pair<int,Node*>> bfs;
+        bfs.push({0,node});
+
+        while(!bfs.empty())
+        {
+            level=bfs.size();
+            while(level--)
+            {
+                node = bfs.front().second;
+                breadth = bfs.front().first;
+                horizontalDistantNode[breadth] = node;
+                if(node->left!=nullptr)
+                    bfs.push({breadth-1,node->left});
+                if(node->right!=nullptr)
+                    bfs.push({breadth+1,node->right});
+                bfs.pop();
+            }
+        }
+
+        for(auto i : horizontalDistantNode)
+        {
+            output.push_back(i.second->data);
+        }
+
+        return output;
+    }
+};

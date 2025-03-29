@@ -1,0 +1,24 @@
+//Its the most optimized approach
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> output;
+        stack<TreeNode*> inorderTraversal;
+        TreeNode* curr = root;
+
+        while(!inorderTraversal.empty() || curr!=nullptr)
+        {
+            while(curr != nullptr)
+            {
+                inorderTraversal.push(curr);
+                curr = curr->left;
+            }
+            curr = inorderTraversal.top();
+            output.push_back(curr->val);
+            inorderTraversal.pop();
+            curr=curr->right;
+        }
+        return output;
+    }
+};
