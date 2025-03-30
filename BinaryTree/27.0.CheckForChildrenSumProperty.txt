@@ -1,0 +1,33 @@
+class Solution{
+    public:
+    //Function to check whether all nodes of a tree have the value
+    //equal to the sum of their child nodes.
+    bool isSumPrp = true;
+
+    int traversal(Node* tempNode)
+    {
+        if(tempNode==nullptr)
+            return 0;
+        int leftChildSum = traversal(tempNode->left);
+        int rightChildSum = traversal(tempNode->right);
+
+        if(tempNode->left==nullptr && tempNode->right==nullptr)
+            return tempNode->data;
+
+        if(tempNode->data!=leftChildSum+rightChildSum)
+            isSumPrp = false;
+
+        return leftChildSum + rightChildSum;
+    }
+
+
+    int isSumProperty(Node *root)
+    {
+        traversal(root);
+        if(isSumPrp==true)
+            return 1;
+        else
+            return 0;
+
+    }
+};

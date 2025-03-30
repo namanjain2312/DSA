@@ -1,0 +1,36 @@
+
+class Solution {
+public:
+    bool isSym = true;
+
+    void dfs(TreeNode *leftNode,TreeNode *rightNode)
+    {
+        if(leftNode==nullptr || rightNode==nullptr)
+        {
+            if(leftNode!=rightNode)
+                isSym=false;
+            return;
+        }
+
+        if((leftNode->val!=rightNode->val) || !isSym)
+        {
+            isSym=false;
+            return;
+        }
+        else
+        {
+            dfs(leftNode->left,rightNode->right);
+            dfs(leftNode->right,rightNode->left);
+        }
+        return ;
+    }
+
+    bool isSymmetric(TreeNode* root) {
+
+        dfs(root->left,root->right);
+        return isSym;
+
+
+
+    }
+};

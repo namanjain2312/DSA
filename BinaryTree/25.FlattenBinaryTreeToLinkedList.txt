@@ -1,0 +1,32 @@
+
+class Solution {
+public:
+
+    void flatten(TreeNode* root) {
+
+        stack<TreeNode*> s;
+        TreeNode* curr;
+        TreeNode* pre = new TreeNode();
+        if(root==nullptr)
+            return ;
+
+        s.push(root);
+
+        while(!s.empty())
+        {
+            curr=s.top();
+            s.pop();
+
+            pre->right=curr;
+            pre->left=nullptr;
+
+            if(curr->right!=nullptr)
+                s.push(curr->right);
+            if(curr->left!=nullptr)
+                s.push(curr->left);
+
+            pre=curr;
+        }
+
+    }
+};

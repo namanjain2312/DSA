@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int preIndex = 0;
+    int postIndex = 0;
+    TreeNode* build(vector<int>& preorder,vector<int> &postorder)
+    {
+        TreeNode* root= new TreeNode();
+        root->val=preorder[preIndex];
+        preIndex++;
+
+        if (root->val != postorder[postIndex]) {
+            root->left = build(preorder, postorder);
+        }
+        if (root->val != postorder[postIndex]) {
+            root->right = build(preorder, postorder);
+        }
+
+        postIndex++;
+
+        return root;
+    }
+
+    TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
+
+        return build(preorder,postorder);
+
+
+    }
+};

@@ -1,0 +1,24 @@
+class Solution {
+  public:
+    // Function to convert a binary tree into its mirror tree.
+    void mirror(Node* node) {
+        stack<Node*> s;
+        s.push(node);
+        Node *temp,*curr;
+
+
+        while(!s.empty())
+        {
+            curr=s.top();
+            s.pop();
+            temp=curr->left;
+            curr->left=curr->right;
+            curr->right=temp;
+
+            if(curr->left!=nullptr)
+                s.push(curr->left);
+            if(curr->right!=nullptr)
+                s.push(curr->right);
+        }
+    }
+};

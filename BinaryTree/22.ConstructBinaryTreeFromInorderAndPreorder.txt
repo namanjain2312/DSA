@@ -1,0 +1,26 @@
+class Solution {
+public:
+int preStartIndex=-1;
+    TreeNode* build(vector<int>& preorder, vector<int>& inorder,int inStartIndex,int inEndIndex,unordered_map<int,int>&m) {
+
+        if(inStartIndex>inEndIndex)
+            return nullptr;
+        preStartIndex++;
+        TreeNode *root=new TreeNode();
+        int curr=preorder[preStartIndex];
+        root->val=curr;
+        int index = m[curr];
+        root->left=build(preorder,inorder,inStartIndex,index-1,m);
+        root->right = build(preorder,inorder,index+1,inEndIndex,m);
+        return root;
+    }
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        unordered_map<int,int> m ;
+
+        for(int i=0;i<inorder.size();i++)
+            m[inorder[i]]=i;
+
+        return build(preorder,inorder,0,inorder.size()-1,m);
+    }
+};
