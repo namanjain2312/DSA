@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isSame = true;
+
+    void dfs(TreeNode *t1,TreeNode *t2)
+    {
+        if(isSame==false || (t1==nullptr && t2==nullptr))
+            return ;
+        if(t1==nullptr || t2==nullptr)
+        {
+            isSame=false;
+            return ;
+        }
+        if(t1->val!=t2->val)
+        {
+            isSame=false;
+            return ;
+        }
+
+        dfs(t1->left,t2->left);
+        dfs(t1->right,t2->right);
+    }
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        dfs(p,q);
+        return isSame;
+    }
+};

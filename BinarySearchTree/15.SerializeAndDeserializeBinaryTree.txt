@@ -17,7 +17,6 @@ public:
             else
             {
                 out=out+to_string(tempNode->val) + ",";
-                if(tempNode)
                 q.push(tempNode->left);
                 q.push(tempNode->right);
             }
