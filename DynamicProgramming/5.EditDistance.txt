@@ -1,0 +1,94 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+
+    int funct(string &word1,string &word2,int index1,int index2,vector<vector<int>>&dp)
+    {
+        if(index1==word1.size())
+            return (int)word2.size()-index2;
+        if(index2==word2.size())
+            return (int)word1.size()-index1;
+
+        if(dp[index1][index2]!=INT_MAX)
+            return dp[index1][index2];
+
+        int ans=INT_MAX;
+        //Match
+        if(word1[index1]==word2[index2])
+            ans=funct(word1,word2,index1+1,index2+1,dp);
+
+        //Replace
+        ans=min(1+funct(word1,word2,index1+1,index2+1,dp),ans);
+
+        //Insert or Delete
+        ans=min(1+funct(word1,word2,index1+1,index2,dp),ans);
+        ans=min(1+funct(word1,word2,index1,index2+1,dp),ans);
+        dp[index1][index2]=ans;
+        return ans;
+    }
+
+    int minDistance(string word1, string word2) {
+        // int n=word1.size(),m=word2.size();
+        // vector<vector<int>>dp(n,vector<int>(m,INT_MAX));
+        // return funct(word1,word2,0,0,dp);
+
+        // int n=word1.size(),m=word2.size();
+        // vector<vector<int>>dp(n+1,vector<int>(m+1,INT_MAX));
+        // int ans;
+
+        // for(int i=n;i>=0;i--)
+        // {
+        //     for(int j=m;j>=0;j--)
+        //     {
+        //         if(i==n)
+        //         {
+        //             dp[i][j]=word2.size()-j;
+        //             continue;
+        //         }
+        //         if(j==m)
+        //         {
+        //             dp[i][j]=word1.size()-i;
+        //             continue;
+        //         }
+
+        //         if(word1[i]==word2[j])
+        //             dp[i][j]=dp[i+1][j+1];
+        //         dp[i][j]=min({dp[i][j],1+dp[i+1][j],1+dp[i][j+1],1+dp[i+1][j+1]});
+        //     }
+        // }
+        // return dp[0][0];
+
+
+        int n=word1.size(),m=word2.size();
+        vector<vector<int>>dp(2,vector<int>(m+1,INT_MAX));
+        int ans;
+
+        for(int i=n;i>=0;i--)
+        {
+            for(int j=m;j>=0;j--)
+            {
+                if(i==n)
+                {
+                    dp[0][j]=m-j;
+                    continue;
+                }
+                if(j==m)
+                {
+                    dp[0][j]=n-i;
+                    continue;
+                }
+
+                if(word1[i]==word2[j])
+                    dp[0][j]=dp[1][j+1];
+                else
+                    dp[0][j]=1+ min({dp[1][j],dp[0][j+1],dp[1][j+1],dp[0][j]});
+            }
+            dp[1] = dp[0];
+        }
+        return dp[0][0];
+
+
+
+    }
+};

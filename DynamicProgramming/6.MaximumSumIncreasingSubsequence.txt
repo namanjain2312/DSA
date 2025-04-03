@@ -1,0 +1,51 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+
+class Solution {
+  public:
+  
+    int funct(vector<int>&arr,int index,int preIndex,vector<vector<int>>&dp)
+    {
+        if(index==arr.size())
+            return 0;
+            
+        if(dp[index+1][preIndex+1]!=INT_MIN)
+            return dp[index+1][preIndex+1];
+            
+        int sum=INT_MIN;
+        
+        if(preIndex==-1||arr[index]>arr[preIndex])
+            sum=max(sum,funct(arr,index+1,index,dp)+arr[index]);
+        sum=max(sum,funct(arr,index+1,preIndex,dp));
+        
+        return dp[index+1][preIndex+1]=sum;
+    }
+    
+    int maxSumIS(vector<int>& arr) {
+        // vector<vector<int>>dp(arr.size()+1,vector<int>(arr.size()+1,INT_MIN));
+        // return funct(arr,0,-1,dp);
+        // Your code goes here
+        
+        vector<vector<int>>dp(arr.size()+1,vector<int>(arr.size()+1,INT_MIN));
+        int n=arr.size();
+        int sum;
+        for (int j = 0; j <= n; j++) {
+            dp[n][j] = 0;
+        }
+        for (int i = n - 1; i >= 0; i--) {
+        for (int j = 0; j <= n; j++) {
+            int preIndex = j - 1;  // because j==0 means preIndex = -1
+            int take = INT_MIN;
+            if (preIndex == -1 || arr[i] > arr[preIndex])
+                take = arr[i] + dp[i + 1][i + 1];  // update preIndex to i -> shift gives i+1
+            int skip = dp[i + 1][j];
+            dp[i][j] = max(take, skip);
+        }
+        }
+        return dp[0][0];
+    }
+};
