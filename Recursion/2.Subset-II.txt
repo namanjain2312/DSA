@@ -1,0 +1,60 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Brute Force / Not So optimal solution
+class Solution {
+public:
+    void findAllSubset(int index,set<vector<int>>&out,vector<int>&nums,vector<int>currArr)
+    {
+        if(index==nums.size())
+        {
+            sort(currArr.begin(),currArr.end());
+            out.insert(currArr);
+            return ;
+        }
+
+        findAllSubset(index+1,out,nums,currArr);
+        currArr.push_back(nums[index]);
+        findAllSubset(index+1,out,nums,currArr);
+
+        return ;
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<int>currArr;
+        set<vector<int>>out;
+        findAllSubset(0,out,nums,currArr);
+        vector<vector<int>>ans;
+        for(auto i = out.begin();i!=out.end();++i)
+        {
+            ans.push_back(*i);
+        }
+        return ans;
+    }
+};

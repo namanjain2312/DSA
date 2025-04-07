@@ -1,0 +1,101 @@
+#include <bits/stdc++.h>
+
+//Min Heap
+struct comp
+{
+    bool operator()(const pair<int,pair<int,int>>&p1,const pair<int,pair<int,int>>&p2)
+    {
+        return p1.first>p2.first;
+    }
+};
+
+
+
+vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays, int k)
+{
+    vector<int>out;
+    priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,comp>pq;
+    pair<int,pair<int,int>>temp;
+
+    for(int i=0;i<k;i++)
+        pq.push({kArrays[i][0],{i,0}});
+
+    while(!pq.empty())
+    {
+        temp=pq.top();
+        pq.pop();
+        out.push_back(temp.first);
+
+        if(kArrays[temp.second.first].size()-1!=temp.second.second)
+            pq.push({kArrays[temp.second.first][temp.second.second+1],{temp.second.first,temp.second.second+1}});
+    }
+
+    return out;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Brute Force -
+
+
+#include <bits/stdc++.h>
+vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays, int k)
+{
+    vector<int>out;
+    vector<int>indices(k,0);
+    pair<int,pair<int,int>>comp;
+    int i,j,l;
+
+    while(true)
+    {
+        comp.first=INT_MAX;
+
+        for(int l=0;l<indices.size();l++)
+        {
+            i=l;
+            j=indices[l];
+            if(kArrays[i].size()>j && comp.first>kArrays[i][j])
+            {
+                comp.first = kArrays[i][j];
+                comp.second.first=i;
+                comp.second.second=j;
+            }
+        }
+        if(comp.first==INT_MAX)
+            break;
+        else
+        {
+            i=comp.second.first;
+            j=comp.second.second;
+            out.push_back(comp.first);
+            indices[i]++;
+        }
+    }
+    return out;
+}

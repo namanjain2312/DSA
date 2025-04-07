@@ -1,0 +1,41 @@
+class Solution {
+public:
+
+    int  findTotalCoins(vector<int>&coins,int amount,int index,vector<vector<int>> &dp)
+    {
+        if(index<0 || amount<0)
+            return -1;
+
+        int ans=INT_MAX;
+        if(dp[amount][index]!=INT_MAX)
+            return dp[amount][index];
+
+        for(int i=amount/coins[index]+1;i>=0;i--)
+        {
+            long long total = (long long)coins[index]*i;
+            if(total ==(long long)amount)
+            {
+                ans=i;
+                break;
+            }
+            else if(total<(long long)amount)
+            {
+                if(findTotalCoins(coins,amount-coins[index]*i,index-1,dp)!=-1)
+                    ans=min(ans,i+findTotalCoins(coins,amount-coins[index]*i,   index-1,dp));
+            }
+        }
+        if(ans==INT_MAX)
+            return dp[amount][index]=-1;
+        else
+            return dp[amount][index] = ans;
+    }
+
+    int coinChange(vector<int>& coins, int amount) {
+
+        // sort(coins.begin(),coins.end());
+        // vector<vector<int>> dp(amount+1,vector<int>(coins.size(),INT_MAX));
+        // return findTotalCoins(coins,amount,coins.size()-1,dp);
+
+
+    }
+};

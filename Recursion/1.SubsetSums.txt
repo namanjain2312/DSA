@@ -1,0 +1,22 @@
+class Solution {
+  public:
+
+    void findSum(int index,int currSum,vector<int>&ans,vector<int>&arr)
+    {
+        if(index==arr.size())
+        {
+            ans.push_back(currSum);
+            return ;
+        }
+
+        findSum(index+1,currSum+arr[index],ans,arr);
+        findSum(index+1,currSum,ans,arr);
+        return ;
+    }
+
+    vector<int> subsetSums(vector<int>& arr) {
+        vector<int>ans;
+        findSum(0,0,ans,arr);
+        return ans;
+    }
+};
