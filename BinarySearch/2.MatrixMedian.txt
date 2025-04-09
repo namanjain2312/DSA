@@ -1,0 +1,71 @@
+class Solution {
+  public:
+
+
+    // int countOfEle(int &val,vector<vector<int>>&mat,int &n,int &m)
+    // {
+    //     int count=0;
+
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         count+= upper_bound(mat[i].begin(),mat[i].end(),val)-mat[i].begin();
+    //     }
+    //     return count;
+    // }
+
+    int calUpperBound(vector<int>&v,int &val)
+    {
+        int low=0,high=v.size()-1;
+        int mid;
+
+        while(low<=high)
+        {
+            mid=(low+high)/2;
+
+            if(v[mid]>val)
+                high=mid-1;
+            else
+                low=mid+1;
+        }
+        return low;
+    }
+
+    int countOfEle(int &val,vector<vector<int>>&mat,int &n,int &m)
+    {
+        int count=0;
+        for(int i=0;i<n;i++)
+        {
+            count+=calUpperBound(mat[i],val);
+        }
+        return count;
+    }
+
+
+    int median(vector<vector<int>> &mat) {
+        int low=INT_MAX,high=INT_MIN,mid,n,m;
+        int count;
+        n=mat.size();
+        m=mat[0].size();
+
+        for(int i=0;i<n;i++)
+        {
+            low=min(low,mat[i][0]);
+            high=max(high,mat[i][m-1]);
+        }
+
+        while(low<=high)
+        {
+            mid=(low+high)/2;
+            count=countOfEle(mid,mat,n,m);
+            //cout<<"Low is "<<low<<" High is "<<high<<"\n";
+            //cout<<"Mid is "<<mid<<" Count is "<<count<<"\n\n";
+
+            if(count>m*n/2)
+                high=mid-1;
+            else
+                low=mid+1;
+        }
+
+        return low;
+    }
+};

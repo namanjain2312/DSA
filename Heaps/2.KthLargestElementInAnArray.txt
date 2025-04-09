@@ -12,13 +12,52 @@ class Solution {
 // SC : O(1)
 
 
+
+//Best , do it using quick sort algorithm
+
+
+
+
+
+
+
+
+//Better
+class Solution {
 public:
-    void quickSelectAlgo(int left,int right,vector<int>& nums)
-    {
-
-    }
-
     int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int,vector<int>,greater<int>>pq;
 
+        for(int i=0;i<nums.size();i++)
+        {
+            if(pq.size()<k)
+                pq.push(nums[i]);
+            else if(pq.top()<nums[i])
+            {
+                pq.pop();
+                pq.push(nums[i]);
+            }
+        }
+        return pq.top();
+    }
+};
+
+
+//Brute
+class Solution {
+
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int>pq;
+        int n;
+        n=nums.size();
+        for(int i=0;i<n;i++)
+            pq.push(nums[i]);
+
+        while(--k)
+        {
+            pq.pop();
+        }
+        return pq.top();
     }
 };

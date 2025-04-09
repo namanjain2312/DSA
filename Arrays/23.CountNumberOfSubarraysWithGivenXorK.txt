@@ -1,0 +1,17 @@
+int Solution::solve(vector<int> &A, int B)
+{
+    int n=A.size();
+    int count=0;
+    map<int,int> m;
+    int currXor=0;
+    m[0]++;
+
+    for(int i=0;i<n;i++)
+    {
+        currXor ^= A[i];
+        if(m.find(currXor^B)!=m.end())
+            count+=m[currXor^B];
+        m[currXor]++;
+    }
+    return count;
+}
