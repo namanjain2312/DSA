@@ -1,0 +1,75 @@
+struct Node
+{
+        Node* links[26];
+        bool flag;
+        Node()
+        {
+            for (int i = 0; i < 26; i++)
+                links[i]=nullptr;
+            flag=false;
+        }
+};
+
+class Trie {
+
+        Node* root;
+public:
+    Trie() {
+            root = new Node();
+    }
+    void InsertLetter(string word,int index,Node* tempNode)
+        {
+            if(index==word.size())
+            {
+                tempNode->flag=true;
+                return ;
+            }
+            else
+            {
+                if(tempNode->links[word[index]-'a']==nullptr)
+                    tempNode->links[word[index]-'a'] = new Node();
+                InsertLetter(word,index+1,tempNode->links[word[index]-'a']);
+            }
+        }
+
+        bool SearchLetter(string word,int index,Node* tempNode)
+        {
+            if(index==word.size())
+                return tempNode->flag;
+
+            if(tempNode->links[word[index]-'a']==nullptr)
+                return false;
+            else
+                return SearchLetter(word,index+1,tempNode->links[word[index]-'a']);
+        }
+
+        bool StartWithLetter(string word,int index,Node* tempNode)
+        {
+            if(index==word.size())
+                return true;
+
+            if(tempNode->links[word[index]-'a']==nullptr)
+                return false;
+            else
+                return StartWithLetter(word,index+1,tempNode->links[word[index]-'a']);
+        }
+    void insert(string word) {
+        InsertLetter(word,0,root);
+    }
+
+    bool search(string word) {
+        return SearchLetter(word,0,root);
+    }
+
+    bool startsWith(string prefix) {
+        return StartWithLetter(prefix,0,root);
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */

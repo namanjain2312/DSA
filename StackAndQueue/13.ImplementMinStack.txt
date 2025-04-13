@@ -1,0 +1,32 @@
+//Could be more optmized , in current case Space Complexiyt  - 2*N as using pair ,but most optimized have
+1*N - Space Complexity
+
+class MinStack {
+public:
+    vector<pair<int,int>>v;
+
+    MinStack() {
+        while(!v.empty())
+            v.pop_back();
+    }
+
+    void push(int val) {
+        int prev;
+        if(v.size()>0)
+            v.push_back({val,min(val,v[v.size()-1].second)});
+        else
+            v.push_back({val,val});
+    }
+
+    void pop() {
+        v.pop_back();
+    }
+
+    int top() {
+        return v[v.size()-1].first;
+    }
+
+    int getMin() {
+        return v[v.size()-1].second;
+    }
+};

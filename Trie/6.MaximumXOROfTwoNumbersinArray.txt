@@ -1,0 +1,187 @@
+class Solution {
+public:
+
+    struct Node
+    {
+        Node* links[2];
+        bool flag;
+        Node()
+        {
+            for(int i=0;i<2;i++)
+                links[i]=nullptr;
+            flag=false;
+        }
+    };
+
+    void insertValue(Node* node,int num)
+    {
+        for (int i = 31; i >= 0; i--) {
+            int bit = (num >> i) & 1;
+            if (!node->links[bit])
+                node->links[bit] = new Node();
+            node = node->links[bit];
+        }
+    }
+
+    int search(int num,Node* node)
+    {
+        int maxXor = 0;
+        for (int i = 31; i >= 0; i--) {
+            int bit = (num >> i) & 1;
+            // Try to take the opposite branch if it exists.
+            if (node->links[1 - bit]) {
+                maxXor |= (1 << i);  // Set the i-th bit.
+                node = node->links[1 - bit];
+            } else {
+                node = node->links[bit];
+            }
+        }
+        return maxXor;
+    }
+
+
+
+    int findMaximumXOR(vector<int>& nums) {
+        Node* head = new Node();
+        int maxXor=INT_MIN;
+        string temp;
+
+        for(int i=0;i<nums.size();i++)
+        {
+            insertValue(head,nums[i]);
+            //cout<<"Value : "<<convertInBinary(nums[i])<<"\n";
+        }
+
+
+        for(int i=0;i<nums.size();i++)
+        {
+            maxXor=max(maxXor,search(nums[i],head));
+            //cout<<"Temp : "<<temp<<"\n";
+        }
+        return maxXor;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+A little bit of basic apporach i.e. sae complexiyt but basic code , a little unoptimized in comppare wiht upper one
+
+class Solution {
+public:
+
+    struct Node
+    {
+        Node* links[2];
+        bool flag;
+        Node()
+        {
+            for(int i=0;i<2;i++)
+                links[i]=nullptr;
+            flag=false;
+        }
+    };
+
+    string convertInBinary(int n)
+    {
+        string out;
+        while(n>0)
+        {
+            if(n%2==0)
+                out.push_back('0');
+            else
+                out.push_back('1');
+            n=n/2;
+        }
+        while(out.size()<34)
+        {
+            out.push_back('0');
+        }
+        reverse(out.begin(),out.end());
+        return out;
+    }
+
+    void insertValue(Node* tempNode,string s,int index)
+    {
+        if(index==s.size())
+        {
+            tempNode->flag=true;
+            return ;
+        }
+        else
+        {
+            if(tempNode->links[s[index]-'0']==nullptr)
+                tempNode->links[s[index]-'0'] = new Node();
+            insertValue(tempNode->links[s[index]-'0'],s,index+1);
+        }
+    }
+
+    string search(string word,int index,Node* tempNode)
+    {
+        if(index==word.size())
+            return "";
+        string ans;
+        if(word[index]=='1' && tempNode->links[0]!=nullptr)
+        {
+            ans.push_back('0');
+            ans=ans+search(word,index+1,tempNode->links[0]);
+        }
+        else if(word[index]=='1' && tempNode->links[1]!=nullptr)
+        {
+            ans.push_back('1');
+            ans=ans+search(word,index+1,tempNode->links[1]);
+        }
+        else if(word[index]=='0' && tempNode->links[1]!=nullptr)
+        {
+            ans.push_back('1');
+            ans=ans+search(word,index+1,tempNode->links[1]);
+        }
+        else if(word[index]=='0' && tempNode->links[0]!=nullptr)
+        {
+            ans.push_back('0');
+            ans=ans+search(word,index+1,tempNode->links[0]);
+        }
+        return ans;
+    }
+
+    int calXor(string a,string b)
+    {
+        int i=0;
+        int xorVal=0;
+        while(i<a.size())
+        {
+            if((a[i]=='0'&&b[i]=='1') || (a[i]=='1'&&b[i]=='0'))
+                xorVal+=pow(2,a.size()-i-1);
+            i++;
+        }
+        return xorVal;
+    }
+
+    int findMaximumXOR(vector<int>& nums) {
+        Node* head = new Node();
+        int maxXor=INT_MIN;
+        string temp;
+
+        for(int i=0;i<nums.size();i++)
+        {
+            insertValue(head,convertInBinary(nums[i]),0);
+            //cout<<"Value : "<<convertInBinary(nums[i])<<"\n";
+        }
+
+
+        for(int i=0;i<nums.size();i++)
+        {
+            temp=search(convertInBinary(nums[i]),0,head);
+            //cout<<"Temp : "<<temp<<"\n";
+            maxXor =  max(maxXor,calXor(temp,convertInBinary(nums[i])));
+        }
+        return maxXor;
+    }
+};

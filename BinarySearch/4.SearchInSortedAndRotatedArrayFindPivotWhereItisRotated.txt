@@ -1,0 +1,68 @@
+//Could be optimized more , see the approach
+
+
+class Solution {
+public:
+
+    int search(vector<int>&nums,int low,int high,int target)
+    {
+        int mid;
+        while(low<=high)
+        {
+            mid=(low+high)/2;
+            if(nums[mid]==target)
+                return mid;
+            else if(nums[mid]>target)
+                high=mid-1;
+            else
+                low=mid+1;
+        }
+        return -1;
+    }
+
+    int search(vector<int>& nums, int target) {
+        int low, high,mid,n=nums.size();
+        low=0,high=n-1;
+        int a=0,b=0,c=0,d=0;
+
+        while(low<=high)
+        {
+            mid=(low+high)/2;
+            if(mid-1>=0 && nums[mid-1]>nums[mid])
+            {
+                a=0;
+                b=mid-1;
+                c=mid;
+                d=n-1;
+                break;
+            }
+            else if(mid+1<n && nums[mid+1]<nums[mid])
+            {
+                a=0;
+                b=mid;
+                c=mid+1;
+                d=n-1;
+                break;
+            }
+            if(nums[mid]>nums[high])
+                low=mid+1;
+            else
+                high=mid-1;
+        }
+        if(d==0)
+            d=n-1;
+
+        cout<<" a "<<a<<" b "<< b <<" c "<<c<<" d "<<d<<"\n";
+
+        int left=search(nums,a,b,target);
+        int right=search(nums,c,d,target);
+        if(left!=-1)
+            return left;
+        else
+            return right;
+
+
+    }
+};
+
+//4 5 6 7 0 1 2
