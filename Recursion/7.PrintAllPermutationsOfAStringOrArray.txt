@@ -1,0 +1,52 @@
+Frequency Count as a Vector of Pairs:
+We first build an unordered_map but then convert it to a vector<pair<int,int>> (named freq) for more deterministic iteration.
+
+Backtracking with References:
+The recursive function backtrack accepts freq and curr by reference. We update the current permutation and restore the counts after the recursive call. This avoids the overhead of copying the containers in every call.
+
+Generalized Condition:
+The check if (p.second > 0) ensures that every available occurrence of each number is used, regardless of whether the count is 1 or greater.
+
+
+class Solution {
+public:
+    vector<vector<int>>out;
+
+    void permu(unordered_map<int,int>m,vector<int>v)
+    {
+        bool isEmpty=true;
+        for(auto i : m)
+        {
+            if(i.second!=0)
+                isEmpty=false;
+        }
+        if(isEmpty)
+        {
+            out.push_back(v);
+            return ;
+        }
+
+        for(auto i : m)
+        {
+            if(i.second==1)
+            {
+                v.push_back(i.first);
+                m[i.first]--;
+                permu(m,v);
+                v.pop_back();
+                m[i.first]++;
+            }
+        }
+        return ;
+
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        unordered_map<int,int> m;
+        vector<int>v;
+        for(int i=0;i<nums.size();i++)
+            m[nums[i]]++;
+        permu(m,v);
+        return out;
+    }
+};

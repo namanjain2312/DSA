@@ -1,0 +1,57 @@
+//Could be done in only one while loop
+//Do it again
+
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+    {
+        if(headA==headB)
+            return headA;
+
+        ListNode *slow,*fast;
+        slow=headA;
+        fast=headB;
+
+        while(slow!=nullptr && fast!=nullptr)
+        {
+            slow=slow->next;
+            fast=fast->next;
+        }
+
+        if(slow==nullptr)
+        {
+            slow=headB;
+            while(slow!=nullptr && fast!=nullptr)
+            {
+                if(slow==fast)
+                    return slow;
+                else
+                {
+                    slow=slow->next;
+                    fast=fast->next;
+                }
+                if(fast==nullptr)
+                    fast=headA;
+            }
+        }
+
+        if(fast==nullptr)
+        {
+            fast=headA;
+            while(slow!=nullptr && fast!=nullptr)
+            {
+                if(slow==fast)
+                    return slow;
+                else
+                {
+                    slow=slow->next;
+                    fast=fast->next;
+                }
+                if(slow==nullptr)
+                    slow=headB;
+            }
+        }
+        return nullptr;
+    }
+};

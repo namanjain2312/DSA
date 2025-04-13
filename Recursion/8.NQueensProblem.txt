@@ -1,0 +1,143 @@
+Conflict Check Optimization:
+By maintaining simple boolean arrays for columns and both diagonals, you can check if a queen can be safely placed in constant time.
+
+No Heavy Copies:
+Instead of copying sets in each recursive call, the solution uses backtracking with in-place modifications, thus preserving efficiency.
+
+Clear Representation:
+The board is represented as a vector of strings, generated at the moment a complete solution is found. The code is easier to follow and has less repetitive logic.
+
+
+Replacing the sets of attacked positions with more efficient data structures (arrays or bit masks) to track column and diagonal conflicts.
+
+Avoiding passing sets by value and using in-place backtracking instead.
+
+Simplifying the code structure to use standard, well-known patterns for N-Queens.
+
+class Solution {
+public:
+    vector<vector<string>>out;
+    void insertAttackingPos(int row,int col,set<pair<int,int>>&s,int n)
+    {
+        int a,b;
+        a=row;
+        b=col;
+
+        while(a>=0)
+        {
+            s.insert({a,b});
+            a--;
+        }
+
+        a=row;
+        b=col;
+
+        while(b>=0)
+        {
+            s.insert({a,b});
+            b--;
+        }
+        a=row;
+        b=col;
+
+        while(a<n)
+        {
+            s.insert({a,b});
+            a++;
+        }
+        a=row;
+        b=col;
+
+        while(b<n)
+        {
+            s.insert({a,b});
+            b++;
+        }
+        a=row;
+        b=col;
+        while(a>=0 && b>=0)
+        {
+            s.insert({a,b});
+            a--;
+            b--;
+        }
+        a=row;
+        b=col;
+        while(a<n&&b<n)
+        {
+            s.insert({a,b});
+            a++;
+            b++;
+        }
+
+        a=row;
+        b=col;
+
+        while(a<n&&b>=0)
+        {
+            s.insert({a,b});
+            a++;
+            b--;
+        }
+        a=row;
+        b=col;
+
+        while(a>=0 && b<n)
+        {
+            s.insert({a,b});
+            a--;
+            b++;
+        }
+        return ;
+    }
+
+    void addAnswer(set<pair<int,int>>&valid,int n)
+    {
+        string temp;
+            vector<string>tempVector;
+
+            for(int i=0;i<n;i++)
+            {
+                temp="";
+                for(int j=0;j<n;j++)
+                {
+                    if(valid.find({i,j})!=valid.end())
+                        temp.push_back('Q');
+                    else
+                        temp.push_back('.');
+                }
+                tempVector.push_back(temp);
+            }
+            out.push_back(tempVector);
+            return ;
+    }
+
+    void ans(int row,int col,int n,set<pair<int,int>>s,set<pair<int,int>>valid)
+    {
+        valid.insert({row,col});
+        insertAttackingPos(row,col,s,n);
+        if(valid.size()==n)
+        {
+            addAnswer(valid,n);
+            return ;
+        }
+
+
+            for(int j=0;j<n;j++)
+            {
+                if(s.find({row+1,j})==s.end())
+                    ans(row+1,j,n,s,valid);
+            }
+
+        return ;
+    }
+
+    vector<vector<string>> solveNQueens(int n)
+    {
+        set<pair<int,int>>s;
+        set<pair<int,int>>valid;
+        for(int j=0;j<n;j++)
+            ans(0,j,n,s,valid);
+        return out;
+    }
+};

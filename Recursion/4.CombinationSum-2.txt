@@ -1,0 +1,70 @@
+Preprocess the Input:
+Sort the array and then compress it into a vector of pairs, where each pair contains a unique candidate and its frequency.
+
+Backtracking Using References:
+Use a recursive function that passes a reference to a current combination and uses push/pop operations to add and remove candidates. This avoids extra copies.
+
+Do it again
+
+class Solution {
+public:
+
+    vector<vector<int>>out;
+
+    void calComSum(vector<int>&candidates,int sum,int index,vector<int>v,unordered_map<int,int>&m,int preIndex)
+    {
+        if(index==candidates.size())
+            return ;
+        else if(sum<0)
+            return ;
+        else if(preIndex!=-1 && candidates[index]==candidates[preIndex])
+        {
+            calComSum(candidates,sum,index+1,v,m,preIndex);
+            return ;
+        }
+
+        int count=m[candidates[index]];
+        int j=0;
+        int currValue;
+
+        while(j<=count)
+        {
+            currValue = sum-candidates[index]*j;
+
+            if(currValue==0)
+            {
+                out.push_back(v);
+                break;
+            }
+            else if(currValue>0)
+            {
+                calComSum(candidates,currValue,index+1,v,m,index);
+            }
+            else
+                break;
+
+            j++;
+            v.push_back(candidates[index]);
+        }
+
+        return ;
+    }
+
+
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+    {
+        vector<int>v;
+        sort(candidates.begin(),candidates.end());
+        unordered_map<int,int>m;
+        for(int i=0;i<candidates.size();i++)
+            m[candidates[i]]++;
+
+        calComSum(candidates,target,0,v,m,-1);
+
+
+
+        return out;
+
+    }
+};

@@ -1,0 +1,70 @@
+Factorial Precomputation:
+The factorial vector is computed once so that for each digit selection step you can quickly access the block size.
+
+Zero-Based Indexing:
+Adjusting
+𝑘
+k to be zero-indexed (i.e., k--) simplifies the arithmetic when computing the index.
+
+Direct Digit Selection and Removal:
+Instead of tracking used numbers in a set, the algorithm removes the chosen digit from the vector of available numbers. This makes it easy to maintain the list of candidates and eliminates the need for lookups.
+
+Clear Loop Structure:
+The loop directly corresponds to choosing one digit at a time for the final permutation string, which tends to be easier to understand and maintain compared to a recursive approach.
+
+Simplify string conversion by directly converting digits with '0' + i.
+
+
+
+class Solution {
+public:
+
+    int fact(int i)
+    {
+        int out=1;
+        for(int j=1;j<=i;j++)
+            out=out*j;
+        return out;
+    }
+
+    void funct(int curValue,set<int>&s,string &out,int &n)
+    {
+        if(curValue==0)
+        {
+            for(int i=1;i<=n;i++)
+            {
+                if(s.find(i)==s.end())
+                {
+                    out.push_back(std::to_string(i)[0]);
+                    s.insert(i);
+                }
+            }
+            return ;
+        }
+        int currFact=fact((int)n-(int)s.size()-1);
+
+        for(int i=1;i<=n;i++)
+        {
+            if(s.find(i)!=s.end())
+                continue;
+            else
+            {
+                if(curValue-currFact<=0)
+                {
+                    out.push_back(std::to_string(i)[0]);
+                    s.insert(i);
+                    return funct(curValue,s,out,n);
+                }
+                else
+                    curValue = curValue-currFact;
+            }
+        }
+
+    }
+    string getPermutation(int n, int k) {
+        set<int>s;
+        string out;
+        funct(k,s,out,n);
+        return out;
+    }
+};

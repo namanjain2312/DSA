@@ -1,0 +1,53 @@
+Benefits of the Revised Approach:
+Efficiency:
+Passing the current combination by reference and using push_back/pop_back avoids the cost of copying vectors for every recursive call.
+
+Simplicity & Clarity:
+The recursion is structured in an easy-to-follow for-loop. It’s clear when a candidate is added and removed (backtracking) after exploring that branch.
+
+Early Termination:
+With sorting, the loop can break early if the candidate exceeds the remaining target, reducing unnecessary recursive calls.
+
+Do it again
+
+class Solution {
+public:
+
+    vector<vector<int>>out;
+
+    void calComSum(vector<int>&candidates , int index,int sum,vector<int>v)
+    {
+        if(index==candidates.size())
+            return ;
+        else if(sum<0)
+            return ;
+
+        int j=0;
+        int currVal;
+        while(true)
+        {
+            currVal=candidates[index]*j;
+            if(sum-currVal==0)
+            {
+                out.push_back(v);
+                break;
+            }
+            else if(sum-currVal>0)
+            {
+                calComSum(candidates,index+1,sum-currVal,v);
+            }
+            else
+                break;
+            j++;
+            v.push_back(candidates[index]);
+        }
+        return ;
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target)
+    {
+        vector<int>v;
+        calComSum(candidates,0,target,v);
+        return out;
+    }
+};

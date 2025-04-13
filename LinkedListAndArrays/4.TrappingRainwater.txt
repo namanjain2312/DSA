@@ -1,0 +1,32 @@
+Do it again in O(1) space compplexity
+
+
+
+
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+
+        int pre;
+        int n=height.size();
+        vector<pair<int,int>>v(n,{-1,-1});
+        int out=0;
+        for(int i=1;i<n;i++)
+        {
+            pre=height[i-1];
+            v[i].first=max(pre,v[i-1].first);
+        }
+        for(int i=n-2;i>=0;i--)
+        {
+            pre=height[i+1];
+            v[i].second=max(pre,v[i+1].second);
+        }
+
+        for(int i=1;i<=n-2;i++)
+        {
+            out=out+max(min(v[i].first,v[i].second)-height[i],0);
+        }
+        return out;
+    }
+};
