@@ -1,8 +1,97 @@
+Dijikstra Algorithm
+1>The above algo is used to find and print the shortest path in a weighted undirected graph from a source
+to a point
+2>Also it helps to find the shortest dist from source to a node (Only value , not exaclty the path)
+3>Works only for positive weights and undirected graph and no negative cycle graph
+4>Now my Solution have two codes , above one is to find the shortest path and print the path
+5>Other is to find the shortest path value from a source to all the vertex
+6>Why we cannot use Queue instead of PQ , ans is to avoid unnecessary iteration as in queue we will not go in
+the most optimized order and hence repeating the path again and again unecesaaryliy, so while using PQ
+we will greedily pick up the path but in Queue we will pick all path and unecessary long path and then short path
+
+Print the shortest path
+
+Steps
+1>Need three things , vis array , priority queue , parent of the curr node
+
+LinkToQuestion - https://www.geeksforgeeks.org/problems/shortest-path-in-weighted-undirected-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=shortest-path-in-weighted-undirected-graph
+
 class Solution {
   public:
-    // Function to find the shortest distance of all the vertices
-    // from the source vertex src.
 
+    vector<int> shortestPath(int n, int m, vector<vector<int>>& edges)
+    {
+        //dist , node , parentNode
+        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>pq;
+        pq.push({0,1,-1});
+        //dist , parent
+        vector<pair<int,int>>vis(n+1,{-1,-1});
+
+        vector<vector<pair<int,int>>> adj(n+1);
+
+        for(int i=0;i<edges.size();i++)
+        {
+            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
+            adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
+        }
+
+        while(!pq.empty())
+        {
+            int dist=pq.top()[0];
+            int currNode=pq.top()[1];
+            int parentNode=pq.top()[2];
+            pq.pop();
+            if(vis[currNode].first!=-1 && vis[currNode].first<=dist)
+            {
+                continue;
+            }
+            vis[currNode]={dist,parentNode};
+
+            for(int i=0;i<adj[currNode].size();i++)
+            {
+                pq.push({dist+adj[currNode][i].second,adj[currNode][i].first,currNode});
+            }
+
+        }
+
+        vector<int>out;
+        if(vis[n].first==-1)
+        {
+            out.push_back(-1);
+            return out;
+        }
+        int temp=n;
+
+        while(temp!=-1)
+        {
+            out.push_back(temp);
+            temp=vis[temp].second;
+        }
+
+        out.push_back(vis[n].first);
+        reverse(out.begin(),out.end());
+        return out;
+
+    }
+};
+
+Find the shortest path value from a source to all the vertex
+
+Steps
+1>Take a min heap of pair<int,int>p where p.first = dist and p.second = node
+2>Make vis(n,-1)
+3>Push source with dist as 0
+4>Now for every iteration in while loop check if the vis[curr],if vis[curr] is less than the dist already
+then pop and coninue
+5>Else do vis[curr]=dist and ,put all the connection from that node with dist as dist + nodeDist in the PQ;
+
+Time Complexity -  E Log V (Check the derivation of this , important)
+
+
+LinkToQuestion - https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1
+
+class Solution {
+  public:
     struct comp {
     bool operator()(const pair<int,int>& p1, const pair<int,int>& p2) {
         return p1.first > p2.first;

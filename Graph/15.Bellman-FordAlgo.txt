@@ -1,15 +1,22 @@
-//If its undirected graph then convert in directed and then apply bellman ford
-//Negative cycle -  If a path weight < 0 then its called negative cycle graph
-//Works for non connected graph also
+Bellman-Ford Algo
+1>Algo to find the shortest path itself
+2>Works for directed graph only
+3>If graph is  undirected graph then convert in directed graph and then apply algo
+4>Works for non connected graph also
+5>Works for path weight < 0 and negative cycle also
+
+Steps
+1>Relax all the edges n-1 times sequentially
+2>if(dist[u]+wt < dist[v])
+    dist[v]=dist[u]+wt;
+3>dist/vis array (with INT_MAX intialization)
+4>
+
+LinkToQuestion - https://www.geeksforgeeks.org/problems/distance-from-the-source-bellman-ford-algorithm/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=distance-from-the-source-bellman-ford-algorithm
 
 
 class Solution {
   public:
-    /*  Function to implement Bellman Ford
-     *   edges: vector of vectors which represents the graph
-     *   src: source vertex
-     *   V: number of vertices
-     */
     vector<int> bellmanFord(int V, vector<vector<int>>& edges, int src)
     {
         vector<int>vis(V,100000000);

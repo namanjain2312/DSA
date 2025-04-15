@@ -1,3 +1,4 @@
+Do it again using z function
 class Solution {
 public:
 
@@ -46,7 +47,7 @@ vector<int> computeLPS(string &pattern) {
         if (j == m) {
             return i - j;
             // Use the LPS array to continue searching for the next possible match
-            //j = lps[j - 1];
+            j = lps[j - 1];
         }
         // Mismatch after j matches
         else if (i < n && needle[j] != haystack[i]) {
@@ -64,47 +65,3 @@ vector<int> computeLPS(string &pattern) {
 
     }
 };
-
-//Let say Needle = ABABC
-//And Hay stack = ABABABC
-//The purpose of the LPS(Longest Prefix which same as some suffix) array is to store, for each index i in the pattern,
-//the length of the longest proper prefix of the substring pattern[0..i] that is also a
-//suffix of that substring. This enables the algorithm to avoid re-comparing characters
-//when a mismatch occurs.
-//Basically we need to check if the begin part of the pattern is there in the pattern in later on or
-//not
-//LPS[i] - Longest suffix from the start which is equl to suffix ending at i
-
-//Index:      0   1   2   3   4
-//Character:  A   B   A   B   C
-
- //LPS[0]=0 , len =0 , i=1
- //Now pattern[1]!=pattern[0]
- //lps[1]=0;
- //pattern[2]==pattern[0]
- //len++;=>len=1;
- //lps[2]=1;
- //pattern[3]==pattern[1]
- //len++=>len=2;
- //lps[3]==2;
- //pattern[4]!=pattern[2]
- //len!=0;
- //len=lps[2-1];
- //len=0;
- //lps[4]=len=0;
- //i==m return ;
- //lps=[0,0,1,2,0]
- //TimeComplexity
- //LPS Array Computation (computeLPS function): O(m)
- //Pattern Searching (strStr function) : O(n)
- //Total - O(m + n)  (Also worst case also same time complexity)
-
- //Space Complexity: O(m) ,  used for LPS
- //Similar Example of pattern
- //a b c d a b e a b f
- //0 0 0 0 1 2 0 1 2 0
-
- //a a a a b a a c d
- //0 1 2 3 0 1 2 0 0
-
-

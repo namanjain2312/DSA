@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+vector<int> maxMinWindow(vector<int> a, int n) {
+    vector<int>preIndex(n,-1);
+    vector<int>nextIndex(n,n);
+    vector<int>out(n,INT_MIN);
+    stack<int>s;
+
+    for(int i=0;i<a.size();i++)
+    {
+        while(s.size()>0 && a[s.top()]>=a[i])
+            s.pop();
+
+        if(s.size()==0)
+            preIndex[i]=-1;
+        else
+            preIndex[i]=s.top();
+        s.push(i);
+    }
+
+    while(!s.empty())
+        s.pop();
+
+    for(int i=a.size()-1;i>=0;i--)
+    {
+        while(s.size()>0 && a[s.top()]>=a[i])
+            s.pop();
+
+        if(s.size()==0)
+            nextIndex[i]=n;
+        else
+            nextIndex[i]=s.top();
+        s.push(i);
+    }
+
+    for(int i=0;i<n;i++)
+    {
+        out[nextIndex[i]-preIndex[i]-1-1]=max(out[nextIndex[i]-preIndex[i]-1-1],a[i]);
+    }
+
+    for(int i=n-2;i>=0;i--)
+    {
+        out[i]=max(out[i+1],out[i]);
+    }
+
+    return out;
+
+}

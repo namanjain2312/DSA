@@ -1,0 +1,59 @@
+Topological Sorting
+1.Basically linear ordering of vertices such that if there is an edge between u and v , u appears before
+v in that ordering
+2.It only works in DAG graph i.e. Directed Acyclic Graph (Also remember why only in a Directed Acyclic Graph)
+3.If graph not Directed then convert it in a directed graph
+4.Topological Sort return one of linear ordering possible to arrange the elements as acc to condition
+above
+
+
+Steps
+1.Do normal dfs , if its vis do not vis it again
+2.After the visitation is completed push the  node in the stack , after everything done
+3.Transfer Elements from stack to vector and this is the answer
+
+Space Complexity - O(n) + O(n) (For stack and vis array)
+Time Complexity - O(V+E) (V-Vertices , E-Edges)
+
+Intution more explained
+1.When we visit any node , we do all its possible dfs , and when every possible dfs from that node is done
+then we put that node in the stack , so automatically we get the topological order
+
+
+class Solution {
+  public:
+    // Function to return list containing vertices in Topological order.
+
+    void dfs(stack<int>&s,vector<int>&vis,vector<vector<int>>&adj,int index)
+    {
+        if(vis[index]==1)
+            return ;
+        vis[index]=1;
+        for(int i=0;i<adj[index].size();i++)
+            dfs(s,vis,adj,adj[index][i]);
+        s.push(index);
+        return ;
+    }
+
+    vector<int> topologicalSort(vector<vector<int>>& adj) {
+       vector<int> out;
+       stack<int>s;
+       int n=adj.size();
+       vector<int>vis(n,0);
+       for(int i=0;i<n;i++)
+       {
+           if(vis[i]==0)
+                dfs(s,vis,adj,i);
+       }
+
+
+       while(!s.empty())
+       {
+           out.push_back(s.top());
+
+           s.pop();
+       }
+       return out;
+    }
+};
+

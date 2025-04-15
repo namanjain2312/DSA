@@ -1,0 +1,106 @@
+class LFUCache {
+public:
+    struct Node{
+        Node* prev;
+        Node* next;
+        int  val;
+        int freq;
+        int key;
+        Node(int key,int val)
+        {
+            this->prev=nullptr;
+            this->next=nullptr;
+            this->val=val;
+            this->key=key;
+            this->freq=1;
+        }
+    };
+    unordered_map<int,Node*> valueVsNode;
+    unordered_map<int,pair<Node*,Node*>> freqVsNode;
+    int cap;
+    int minFreq;
+
+
+
+    LFUCache(int capacity) {
+        valueVsNode.clear();
+        freqVsNode.clear();
+        cap=capacity;
+        minFreq=0;
+    }
+
+    void removeNode(Node* node)
+    {
+        node->prev->next=node->next;
+        node->next->prev=node->prev;
+    }
+
+
+
+    void insertNodeInEnd(Node* node,int freq)
+    {
+        // If the frequency list doesn't exist yet, create dummy head and tail.
+        if (freqVsNode.find(freq) == freqVsNode.end()) {
+            Node* start = new Node(-1, -1);  // dummy head
+            Node* end = new Node(-1, -1);  // dummy tail
+            start->next = end;
+            end->prev = start;
+            freqVsNode[freq] = {start, end};
+        }
+        Node* tail = freqVsNode[freq].second;
+        tail->prev->next = node;
+        node->prev = tail->prev;
+        node->next = tail;
+        tail->prev = node;
+    }
+
+
+    int get(int key) {
+        if(valueVsNode.find(key)==valueVsNode.end())
+            return -1;
+        else
+        {
+            Node *tempNode;
+            int currFreq;
+            tempNode=valueVsNode[key];
+            currFreq=tempNode->freq;
+            removeNode(tempNode);
+
+            if (freqVsNode[currFreq].first->next == freqVsNode[currFreq].second && minFreq == currFreq)
+                minFreq++;
+
+            tempNode->freq++;
+
+            insertNodeInEnd(tempNode,tempNode->freq);
+            return tempNode->val;
+        }
+    }
+
+    void put(int key, int value) {
+        if(cap<=0)
+            return ;
+
+        if(valueVsNode.find(key)!=valueVsNode.end())
+        {
+            Node* node = valueVsNode[key];
+            node->val = value;
+            get(key);
+            return;
+        }
+        if(valueVsNode.size() >= cap)
+        {
+            Node* nodeToRemove = freqVsNode[minFreq].first->next;
+            // Remove from key mapping.
+            valueVsNode.erase(nodeToRemove->key);
+            // Remove from frequency list.
+            removeNode(nodeToRemove);
+            delete nodeToRemove;
+        }
+        Node* newNode = new Node(key, value);
+        valueVsNode[key] = newNode;
+        // New node has frequency 1; update minFreq accordingly.
+        minFreq = 1;
+        insertNodeInEnd(newNode, 1);
+        return ;
+    }
+};
