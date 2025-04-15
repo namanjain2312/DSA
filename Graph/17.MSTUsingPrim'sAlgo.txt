@@ -1,4 +1,34 @@
-//
+MST using Prim's Algo
+Spanning Tree - A tree in which we have n nodes and n-1 edges and all nodes are reachable from
+each other
+MST - Among all the Spanning Tree trees having minium sum of wights is the MST
+
+A spanning tree is defined as a tree-like subgraph of a connected, undirected graph that includes all
+the vertices of the graph. Or, to say in Layman’s words, it is a subset of the edges of the graph
+that forms a tree (acyclic) where every node of the graph is a part of the tree.
+
+The minimum spanning tree has all the properties of a spanning tree with an added constraint of having
+the minimum possible weights among all possible spanning trees. Like a spanning tree, there can also
+be many possible MSTs for a graph.
+
+Steps
+1>Take and PQ (Min Heap) and Vis Node
+2>We can start with any vis node
+
+Intution
+1>Greedy is the intutuion
+
+Time Complexiyt
+1>O(E) * O(Log E)
+
+Space Complexity
+O(E)
+
+
+
+
+Also Do an question of adding an MST Question for the same
+
 
 class Solution {
   public:
@@ -41,9 +71,6 @@ class Solution {
             }
 
         }
-
         return weight;
-
-
     }
 };

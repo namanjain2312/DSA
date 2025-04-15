@@ -5,10 +5,6 @@
 5>connected graph - a graph where every pair of vertices is connected by a path
 In other words, you can reach any vertex from any other vertex by following the edges of the graph
 
-8> In a directed graph, a
-Strongly Connected Component is a subset
-of vertices where every vertex in the subset is reachable from every other
-vertex in the same subset by traversing the directed edges.
 9>Linear Graph with no cycle are always bipartite graphs
 10>Any graph with even cycle lenght are  bipartite graphs
 11>Any graph with odd cycle lenght are not bipartite
