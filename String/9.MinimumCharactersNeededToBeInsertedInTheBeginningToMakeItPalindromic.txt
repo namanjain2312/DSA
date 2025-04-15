@@ -1,3 +1,4 @@
+9.MinimumCharactersNeededToBeInsertedInTheBeginningToMakeItPalindromic
 int Solution::solve(string A)
 {
     int i,len,n;

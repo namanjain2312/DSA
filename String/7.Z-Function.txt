@@ -1,3 +1,4 @@
+7.Z-Function
 Do it again using z function
 class Solution {
 public:
