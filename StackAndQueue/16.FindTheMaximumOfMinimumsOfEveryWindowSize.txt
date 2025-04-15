@@ -1,3 +1,5 @@
+16.FindTheMaximumOfMinimumsOfEveryWindowSize
+
 #include <bits/stdc++.h>
 vector<int> maxMinWindow(vector<int> a, int n) {
     vector<int>preIndex(n,-1);

@@ -1,3 +1,5 @@
+13.ImplementMinStack
+
 //Could be more optmized , in current case Space Complexiyt  - 2*N as using pair ,but most optimized have
 1*N - Space Complexity
 

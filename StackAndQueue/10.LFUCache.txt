@@ -1,3 +1,5 @@
+10.LFUCache
+
 class LFUCache {
 public:
     struct Node{
