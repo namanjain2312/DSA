@@ -1,3 +1,5 @@
+1.PopulateNextRightPointersOfTree
+
 //Last Modified On 11 March 2025
 //Approach could be more optmized also and we are using extra queue for stroing the element .
 

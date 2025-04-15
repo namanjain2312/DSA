@@ -1,3 +1,5 @@
+2.SearchGivenKeyInBST
+
 class Solution {
 public:
     TreeNode* bstSearch(TreeNode *node,int data)

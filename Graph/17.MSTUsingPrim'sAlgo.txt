@@ -1,3 +1,5 @@
+17.MSTUsingPrim'sAlgo
+
 MST using Prim's Algo
 Spanning Tree - A tree in which we have n nodes and n-1 edges and all nodes are reachable from
 each other

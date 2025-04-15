@@ -1,3 +1,5 @@
+12.FlatteningOfALinkedList
+
 //Last Modified On 4 March 2025
 //Not the most optimized solution
 //Try again in this Space complexity is O(n) , but this could be done in Space O(1)

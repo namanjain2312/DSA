@@ -1,3 +1,5 @@
+3.MergeTwoSortedLinkedList(useMethodUsedInMergeSort)
+
 class Solution {
 public:
 

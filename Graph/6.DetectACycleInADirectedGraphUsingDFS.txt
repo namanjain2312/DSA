@@ -1,3 +1,5 @@
+6.DetectACycleInADirectedGraphUsingDFS
+
 // Last Attempted On 05 March 2025
 class Solution {
 public:

@@ -1,3 +1,5 @@
+9.PreorderInorderPostorderInASingleTraversal
+
 vector<vector<int>> getTreeTraversal(TreeNode *root){
     stack<pair<TreeNode*,int>>s;
     TreeNode *temp = root;

@@ -1,3 +1,5 @@
+6.DeleteGivenNodeWhenANodeIsGiven.(0(1)Sol)
+
 class Solution {
 public:
     void deleteNode(ListNode* node)

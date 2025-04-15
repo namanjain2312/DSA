@@ -1,3 +1,5 @@
+6.LeftViewOfBinaryTree
+
 // Last Attempted On 26 Feb 2025
 // Normal DFS will not work here as DFS will not consider the case let say root have
 //two child left and right but the left child have no children but right have a child
