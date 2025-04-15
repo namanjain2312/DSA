@@ -1,4 +1,6 @@
-//Do approach hai iski , kisi bhi approach se kar sakhte ho
+19.2SumProblem
+
+/Do approach hai iski , kisi bhi approach se kar sakhte ho
 
 class Solution {
 public:

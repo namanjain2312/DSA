@@ -1,3 +1,5 @@
+4.SearchInSortedAndRotatedArrayFindPivotWhereItisRotated
+
 //Could be optimized more , see the approach
 
 

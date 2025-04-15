@@ -1,3 +1,5 @@
+2.Pascal'sTriangle
+
 class Solution {
 public:
 

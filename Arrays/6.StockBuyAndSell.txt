@@ -1,3 +1,5 @@
+6.StockBuyAndSell
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {

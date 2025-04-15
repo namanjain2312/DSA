@@ -1,3 +1,4 @@
+15.Majority Element(n 2 times)
 
 class Solution {
 public:

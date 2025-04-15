@@ -1,3 +1,5 @@
+7.AllocateMinimumNumberOfPages
+
 bool canBooksBeDistributed(int maxPage,vector<int>&A,int B)
 {
     int currSum=0,studentCount=1;

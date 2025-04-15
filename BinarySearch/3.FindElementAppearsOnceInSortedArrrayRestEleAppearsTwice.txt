@@ -1,3 +1,5 @@
+3.FindElementAppearsOnceInSortedArrrayRestEleAppearsTwice
+
 Do it again using simpler method , check striver sheets
 
 class Solution {

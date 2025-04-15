@@ -1,3 +1,5 @@
+10.FindTheDuplicateInAnArrayOfN+1Integers
+
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
