@@ -1,0 +1,107 @@
+3.Longest String with All Prefixes
+
+#include <bits/stdc++.h>
+struct Node{
+
+    private :
+        Node* links[26];
+        bool isWordEndsWith;
+
+    public :
+    Node()
+    {
+        for(int i=0;i<26;i++)
+            links[i]=nullptr;
+        isWordEndsWith=false;
+    }
+
+    bool ContainsLetter(char c)
+    {
+        if(links[c-'a']!=nullptr)
+            return true;
+        else
+            return false;
+    }
+
+    Node* GetLetter(char c)
+    {
+        return links[c-'a'];
+    }
+
+    void PutLetter(char c)
+    {
+        links[c-'a'] = new Node();
+        return;
+    }
+    bool MarkAsWordEnd()
+    {
+        isWordEndsWith=true;
+    }
+    bool IsThisAWordEnd()
+    {
+        return isWordEndsWith;
+    }
+
+};
+
+class Trie{
+    private : Node* root;
+    public :
+
+        Trie()
+        {
+            root = new Node();
+        }
+        void InsertListOfWord(vector<string> &listOfWords)
+        {
+            Node* tempNode = nullptr;
+            for(int j=0;j<listOfWords.size();j++)
+            {
+                tempNode = root;
+                for(int i=0;i<listOfWords[j].size();i++)
+                {
+                    if(!tempNode->ContainsLetter(listOfWords[j][i]))
+                        tempNode->PutLetter(listOfWords[j][i]);
+                    tempNode=tempNode->GetLetter(listOfWords[j][i]);
+                }
+                tempNode->MarkAsWordEnd();
+            }
+        }
+
+        bool CheckCompleteString(string &word)
+        {
+            Node* tempNode = root;
+            for(int i=0;i<word.size();i++)
+            {
+                tempNode=tempNode->GetLetter(word[i]);
+                if(!tempNode->IsThisAWordEnd())
+                    return false;
+            }
+            return true;
+        }
+
+};
+
+string completeString(int n, vector<string> &a){
+    Trie trie;
+    trie.InsertListOfWord(a);
+    string output = "";
+
+    for(int i=0;i<n;i++)
+    {
+        if(trie.CheckCompleteString(a[i]))
+        {
+            if(a[i].size()>output.size())
+                output = a[i];
+            else if(a[i].size()==output.size())
+            {
+                if(a[i]<output)
+                    output=a[i];
+            }
+        }
+    }
+    if(output=="")
+        return "None";
+    else
+        return output;
+}

@@ -1,0 +1,75 @@
+2.Implement Trie - 2 (Prefix Tree)
+
+#include <bits/stdc++.h>
+
+
+struct Node
+{
+    Node* links[26];
+    int count;
+    int prefixCount;
+    Node()
+    {
+        for(int i=0;i<26;i++)
+            links[i]=nullptr;
+        count=0;
+        prefixCount = 0;
+    }
+};
+
+class Trie{
+    private : Node* root;
+    public:
+
+    Trie(){
+        root = new Node();
+    }
+
+    void insert(string &word){
+        Node* tempNode = root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(tempNode->links[word[i]-'a']==nullptr)
+                tempNode->links[word[i]-'a'] = new Node();
+            tempNode = tempNode->links[word[i]-'a'];
+            tempNode->prefixCount++;
+        }
+        tempNode->count++;
+    }
+
+    int countWordsEqualTo(string &word){
+        Node* tempNode = root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(tempNode->links[word[i]-'a']==nullptr)
+                return 0;
+            else
+                tempNode = tempNode->links[word[i]-'a'];
+        }
+        return tempNode->count;
+    }
+
+    int countWordsStartingWith(string &word){
+        Node* tempNode = root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(tempNode->links[word[i]-'a']==nullptr)
+                return 0;
+            else
+                tempNode = tempNode->links[word[i]-'a'];
+        }
+        return tempNode->prefixCount;
+    }
+
+    void erase(string &word){
+        Node* tempNode = root;
+        for(int i=0;i<word.size();i++)
+        {
+            tempNode = tempNode->links[word[i]-'a'];
+            tempNode->prefixCount--;
+        }
+        tempNode->count--;
+        if(tempNode->prefixCount==0 && tempNode->count==0)
+            delete tempNode;
+    }
+};
