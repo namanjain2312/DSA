@@ -1,0 +1,66 @@
+Topological Sorting BFS (Kahn's Algorithm)
+1>Topological Sort
+Linear ordering of vertices such that is there is an edge between u and v , u appears before v
+
+2>Topo sort is only valid in DAG
+
+3>Indegree - No of incoming edges for that vertex
+
+Steps 1
+1>Take an indegree array
+2>Take a queue
+3>Insert all nodes with indegree with 0 in the queue
+4>Pull the element out from queue and make the indegree -- to all the nodes it been connected
+5>Only insert elements in queue once there indegree is = 0
+6>Once element is poped from queue push it into the answer
+
+SC : O(N) + O(N)
+TC : O(V+E)
+
+Question Link -https://www.geeksforgeeks.org/problems/topological-sort/1
+
+
+
+//TOPO Sort using BFS (Kahn's Algo)
+class Solution {
+  public:
+    vector<int> topoSort(int V, vector<vector<int>>& edges) {
+        vector<int>inDegree(V,0);
+        queue<int>bfs;
+        vector<int>out;
+        vector<vector<int>>adj(V,vector<int>());
+
+
+
+        for(int i=0;i<edges.size();i++)
+        {
+            adj[edges[i][0]].push_back(edges[i][1]);
+            inDegree[edges[i][1]]++;
+        }
+
+        for(int i=0;i<V;i++)
+        {
+            if(inDegree[i]==0)
+                bfs.push(i);
+        }
+
+        while(!bfs.empty())
+        {
+            int curr;
+            curr=bfs.front();
+            out.push_back(curr);
+            bfs.pop();
+
+            for(int i=0;i<adj[curr].size();i++)
+            {
+                inDegree[adj[curr][i]]--;
+                if(inDegree[adj[curr][i]]==0)
+                {
+                    bfs.push(adj[curr][i]);
+                }
+            }
+        }
+
+        return out;
+    }
+};

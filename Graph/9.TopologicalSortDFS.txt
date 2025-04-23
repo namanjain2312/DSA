@@ -17,6 +17,8 @@ Steps
 Space Complexity - O(n) + O(n) (For stack and vis array)
 Time Complexity - O(V+E) (V-Vertices , E-Edges)
 
+Question Link - https://www.geeksforgeeks.org/problems/topological-sort/1
+
 Intution more explained
 1.When we visit any node , we do all its possible dfs , and when every possible dfs from that node is done
 then we put that node in the stack , so automatically we get the topological order

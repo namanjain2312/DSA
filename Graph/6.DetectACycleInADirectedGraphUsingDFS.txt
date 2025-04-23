@@ -1,49 +1,73 @@
 6.DetectACycleInADirectedGraphUsingDFS
 
-// Last Attempted On 05 March 2025
-class Solution {
-public:
+1>Previous approach of marking vis = 1 for all those element when it came in dfs will not work here
+because consider a graph in that
+1->2->5
+3->4->5
 
-    bool hasDfsCycle(int src,vector<vector<int>> &adj,vector<int>&vis,vector<int>&dfsVis)
-    {
-        int curr;
-        dfsVis[src]=1;
+Now 5 could be visited by 2 and 4 but still our graph do not have cycle in it , so that the issue here
+so for the same what are the steps we follow
 
-        if(vis[src]!=1)
-        {
-            vis[src]=1;
-            for(int i=0;i<adj[src].size();i++)
-            {
-                curr=adj[src][i];
-                if(dfsVis[curr]==1)
-                    return true;
-                else
-                {
-                    if(hasDfsCycle(curr,adj,vis,dfsVis)==true)
-                        return true;
-                }
-            }
-        }
+Steps
+1>Do dfs of a node1(Parent)
+2>Mark it as vis[node1]=1
+2>Do dfs of all the node whoose parent is the node1
+3>Mark all nodes as soon as there dfs is called
+4>After completion of dfs of all child nodes of node 1
+5>Mark vis[node1]=0;
+6>Also if in between step 2 and step6 we encounter node1 again then we have a cycle
+7>in this apporach we need to make two vis array one is vis and another one is dfsVis
 
-        dfsVis[src]=0;
+TimeComplexity : O(N+E)
+SpaceComplexity : O(N) + O(N)
+Auxcilary Stack Space : O(N)
+
+
+
+Question Link - https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
+
+
+bool detectCycle(vector<int>&vis,vector<int>&dfsVis,int curr,vector<vector<int>>&adj)
+{
+    if(vis[curr]==1)
         return false;
+
+    vis[curr]=1;
+    dfsVis[curr]=1;
+
+    for(int i=0;i<adj[curr].size();i++)
+    {
+        if(dfsVis[adj[curr][i]]==1)
+            return true;
+        else if(detectCycle(vis,dfsVis,adj[curr][i],adj)==true)
+            return true;
     }
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int> vis(numCourses,0);
-        vector<vector<int>>adj(numCourses,vector<int>());
-        vector<int> dfsVis(numCourses,0);
 
-        for(int i=0;i<prerequisites.size();i++)
-            adj[prerequisites[i][0]].push_back(prerequisites[i][1]);
 
-        for(int i=0;i<numCourses;i++)
+    dfsVis[curr]=0;
+    return false;
+
+}
+
+class Solution {
+  public:
+    bool isCyclic(int V, vector<vector<int>> &edges) {
+       vector<vector<int>>adj(V,vector<int>());
+       vector<int>vis(V,0);
+       vector<int>dfsVis(V,0);
+
+       for(int i=0;i<edges.size();i++)
+            adj[edges[i][0]].push_back(edges[i][1]);
+
+        for(int i=0;i<V;i++)
         {
             if(vis[i]==0)
             {
-                if(hasDfsCycle(i,adj,vis,dfsVis)==true)
-                    return false;
+                if(detectCycle(vis,dfsVis,i,adj)==true)
+                    return true;
+
             }
         }
-        return true;
+        return false;
     }
 };
