@@ -1,0 +1,64 @@
+15.NumberOfEnclaves
+
+Problem Link -  https://leetcode.com/problems/number-of-enclaves/
+
+Do dfs on all the nodes at the eges and mark its compenents as vis =1 now the remaining cells having land
+are safe to walk
+
+class Solution {
+public:
+
+    bool dfs(int row,int col,vector<vector<int>>&vis,int &count,vector<vector<int>>&grid)
+    {
+        if(vis[row][col]==1)
+            return false;
+
+        vis[row][col]=1;
+        count++;
+
+        vector<bool>v;
+
+        if(row+1<vis.size() && grid[row+1][col]==1)
+            v.push_back(dfs(row+1,col,vis,count,grid));
+        if(col+1<vis[0].size() && grid[row][col+1]==1)
+            v.push_back(dfs(row,col+1,vis,count,grid));
+        if(row-1>=0 && grid[row-1][col]==1)
+            v.push_back(dfs(row-1,col,vis,count,grid));
+        if(col-1>=0 && grid[row][col-1]==1)
+            v.push_back(dfs(row,col-1,vis,count,grid));
+
+        if(row+1==vis.size() || row-1<0 || col+1==vis[0].size() || col-1<0)
+            v.push_back(true);
+
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[i]==true)
+                return true;
+        }
+        return false;
+    }
+
+    int numEnclaves(vector<vector<int>>& grid) {
+        int n,m;
+        n=grid.size();
+        m=grid[0].size();
+        int out=0,count;
+
+        vector<vector<int>>vis(n,vector<int>(m,0));
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                count=0;
+                if(vis[i][j]==0 && grid[i][j]==1)
+                {
+                    if(!dfs(i,j,vis,count,grid))
+                        out+=count;
+                }
+            }
+        }
+
+        return out;
+    }
+};

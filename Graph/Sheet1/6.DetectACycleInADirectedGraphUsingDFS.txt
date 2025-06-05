@@ -1,4 +1,9 @@
 6.DetectACycleInADirectedGraphUsingDFS
+//Correct This Approach
+//Rewrite It
+QuestionLink - https://leetcode.com/problems/course-schedule/description/
+QuestionLink - https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
+
 
 1>Previous approach of marking vis = 1 for all those element when it came in dfs will not work here
 because consider a graph in that

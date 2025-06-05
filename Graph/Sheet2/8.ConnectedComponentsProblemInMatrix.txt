@@ -1,0 +1,52 @@
+8.ConnectedComponentsProblemInMatrix
+Problem Link - https://www.geeksforgeeks.org/problems/connected-components-in-an-undirected-graph/1
+Problem Link - https://www.geeksforgeeks.org/problems/find-the-number-of-islands/1
+Simple Concepts of Connected Components
+
+
+
+class Solution {
+  public:
+
+    vector<int>dir = {-1,1,0};
+
+    void dfs(vector<vector<int>>&vis,vector<vector<char>>& grid,int row,int col)
+    {
+        vis[row][col]=1;
+
+        for(int i=0;i<dir.size();i++)
+        {
+            for(int j=0;j<dir.size();j++)
+            {
+                int a=row+dir[i];
+                int b=col+dir[j];
+
+                if(a>=0 && a<grid.size() && b>=0 && b<grid[0].size() && vis[a][b]==-1 && grid[a][b]=='L')
+                    dfs(vis,grid,a,b);
+            }
+        }
+        return ;
+    }
+
+    int countIslands(vector<vector<char>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        int count=0;
+
+        vector<vector<int>>vis(n,vector<int>(m,-1));
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(vis[i][j]==-1 && grid[i][j]=='L')
+                {
+                    dfs(vis,grid,i,j);
+                    count++;
+                }
+            }
+        }
+        return count;
+
+    }
+};

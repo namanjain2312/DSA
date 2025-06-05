@@ -1,4 +1,6 @@
-Detect A Cyle in A directed graph using BFS
+7.Detect A Cyle in A directed graph using BFS
+QuestionLink - https://leetcode.com/problems/course-schedule/description/
+QuestionLink - https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
 
 Steps
 1>We will use Kahn's Algo for topo sort
@@ -10,10 +12,6 @@ count variable and if count==N then return false , else return true;
 SC : O(N)
 TC : O(V+E)
 
-Question Link - https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
-
-
-//Detect A Cyle in A directed graph using BFS
 
 class Solution {
   public:

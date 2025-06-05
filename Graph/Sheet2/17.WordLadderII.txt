@@ -1,0 +1,195 @@
+17.WordLadderII
+Problem Link - https://leetcode.com/problems/word-ladder-ii/
+
+Very hard problem , also concepts finding all the path from a src to a node could be learned from it
+also focus on the point that we only mark node as visited when an entire level is been visited
+
+
+Approach 1 , Memory opptimized using CP
+
+class Solution {
+public:
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+        if (dict.find(endWord) == dict.end()) return {};
+
+        unordered_map<string, vector<string>> parentMap;
+        unordered_set<string> currLevel, nextLevel;
+        bool found = false;
+
+        currLevel.insert(beginWord);
+
+        while (!currLevel.empty() && !found) {
+            for (const string& word : currLevel)
+                dict.erase(word);  // mark as visited at current level
+
+            for (const string& word : currLevel) {
+                string temp = word;
+                for (int i = 0; i < temp.size(); i++) {
+                    char original = temp[i];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        temp[i] = c;
+                        if (dict.find(temp) != dict.end()) {
+                            nextLevel.insert(temp);
+                            parentMap[temp].push_back(word);
+                            if (temp == endWord) found = true;
+                        }
+                    }
+                    temp[i] = original;
+                }
+            }
+
+            currLevel = nextLevel;
+            nextLevel.clear();
+        }
+
+        vector<vector<string>> results;
+        if (!found) return results;
+
+        vector<string> path = {endWord};
+        dfs(endWord, beginWord, parentMap, path, results);
+        return results;
+    }
+
+private:
+    void dfs(const string& word, const string& beginWord,
+             unordered_map<string, vector<string>>& parentMap,
+             vector<string>& path,
+             vector<vector<string>>& results) {
+        if (word == beginWord) {
+            vector<string> validPath = path;
+            reverse(validPath.begin(), validPath.end());
+            results.push_back(validPath);
+            return;
+        }
+
+        for (const string& parent : parentMap[word]) {
+            path.push_back(parent);
+            dfs(parent, beginWord, parentMap, path, results);
+            path.pop_back();
+        }
+    }
+};
+
+
+
+Approach 2 is the optimized approach , and uses cp for solving
+class Solution {
+public:
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+        if (dict.find(endWord) == dict.end()) return {};
+
+        unordered_map<string, vector<string>> parentMap;
+        unordered_set<string> currLevel, nextLevel;
+        bool found = false;
+
+        currLevel.insert(beginWord);
+
+        while (!currLevel.empty() && !found) {
+            for (const string& word : currLevel)
+                dict.erase(word);  // mark as visited at current level
+
+            for (const string& word : currLevel) {
+                string temp = word;
+                for (int i = 0; i < temp.size(); i++) {
+                    char original = temp[i];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        temp[i] = c;
+                        if (dict.find(temp) != dict.end()) {
+                            nextLevel.insert(temp);
+                            parentMap[temp].push_back(word);
+                            if (temp == endWord) found = true;
+                        }
+                    }
+                    temp[i] = original;
+                }
+            }
+
+            currLevel = nextLevel;
+            nextLevel.clear();
+        }
+
+        vector<vector<string>> results;
+        if (!found) return results;
+
+        vector<string> path = {endWord};
+        dfs(endWord, beginWord, parentMap, path, results);
+        return results;
+    }
+
+private:
+    void dfs(const string& word, const string& beginWord,
+             unordered_map<string, vector<string>>& parentMap,
+             vector<string>& path,
+             vector<vector<string>>& results) {
+        if (word == beginWord) {
+            vector<string> validPath = path;
+            reverse(validPath.begin(), validPath.end());
+            results.push_back(validPath);
+            return;
+        }
+
+        for (const string& parent : parentMap[word]) {
+            path.push_back(parent);
+            dfs(parent, beginWord, parentMap, path, results);
+            path.pop_back();
+        }
+    }
+};
+
+
+
+
+Approach 1 , which should be told in the interview
+
+class Solution {
+public:
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> s(wordList.begin(), wordList.end());
+        vector<vector<string>> out;
+
+        if (s.find(endWord) == s.end())
+            return out;
+
+        queue<vector<string>> q;
+        q.push({beginWord});
+        bool found = false;
+
+        while (!q.empty()) {
+            int level = q.size();
+            unordered_set<string> visitedThisLevel;
+
+            for (int i = 0; i < level; i++) {
+                vector<string> path = q.front(); q.pop();
+                string last = path.back();
+
+                if (last == endWord) {
+                    found = true;
+                    out.push_back(path);
+                }
+
+                for (int j = 0; j < last.size(); j++) {
+                    string temp = last;
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        temp[j] = c;
+                        if (temp != last && s.find(temp) != s.end()) {
+                            vector<string> newPath = path;
+                            newPath.push_back(temp);
+                            q.push(newPath);
+                            visitedThisLevel.insert(temp);
+                        }
+                    }
+                }
+            }
+
+            for (const string& word : visitedThisLevel)
+                s.erase(word);
+
+            if (found)
+                break;
+        }
+
+        return out;
+    }
+};

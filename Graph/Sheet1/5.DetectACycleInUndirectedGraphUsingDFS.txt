@@ -1,8 +1,6 @@
 5.DetectACycleInUndirectedGraphUsingDFS
+Question Link - https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-an-undirected-graph
 
-// Last Attempted On 05 March 2025
-//Problem Link to this question is wrong in the srtriver sheet
-//Correct Link - https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-an-undirected-graph
 class Solution {
   public:
     bool checkCycleDfs(int src,int parent,vector<vector<int>> &adj,vector<int>&vis)

@@ -1,0 +1,54 @@
+1.Connected Components
+
+Question Link - https://www.geeksforgeeks.org/problems/connected-components-in-an-undirected-graph/1
+
+
+class Solution {
+  public:
+
+
+    void dfs(vector<int>&vis,vector<int>&curr,int node,vector<vector<int>>&adj)
+    {
+        vis[node]=1;
+        curr.push_back(node);
+
+        for(int i=0;i<adj[node].size();i++)
+        {
+            if(vis[adj[node][i]]==-1)
+                dfs(vis,curr,adj[node][i],adj);
+        }
+
+        return ;
+    }
+
+    vector<vector<int>> getComponents(int V, vector<vector<int>>& edges)
+    {
+        vector<vector<int>>adj(V,vector<int>());
+        vector<vector<int>>out;
+        vector<int>vis(V,-1);
+        int a,b;
+
+        for(int i=0;i<edges.size();i++)
+        {
+            a=edges[i][0];
+            b=edges[i][1];
+            adj[a].push_back(b);
+            adj[b].push_back(a);
+        }
+
+        for(int i=0;i<V;i++)
+        {
+            if(vis[i]==-1)
+            {
+                vector<int>curr;
+                dfs(vis,curr,i,adj);
+                out.push_back(curr);
+            }
+        }
+
+
+        return out;
+
+
+    }
+};

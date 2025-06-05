@@ -1,0 +1,43 @@
+12.BipartiteCheckUsingDFS
+QuestionLink - https://leetcode.com/problems/is-graph-bipartite/description/
+//Rewrite This
+
+class Solution {
+public:
+
+    bool bipartite=true;
+
+    void dfs(vector<int>&vis,vector<vector<int>>&graph,int index,int color)
+    {
+        if(!bipartite)
+            return ;
+        if(vis[index]!=0 && vis[index]!=color)
+        {
+            bipartite=false;
+            return ;
+        }
+        else if(vis[index]==0)
+        {
+            vis[index]=color;
+            for(int i=0;i<graph[index].size();i++)
+            {
+                if(color==1)
+                    dfs(vis,graph,graph[index][i],2);
+                else
+                    dfs(vis,graph,graph[index][i],1);
+            }
+        }
+    }
+
+    bool isBipartite(vector<vector<int>>& graph) {
+
+        int n=graph.size();
+        vector<int>vis(n,0);
+        for(int i=0;i<n;i++)
+        {
+            if(vis[i]==0)
+            dfs(vis,graph,i,1);
+        }
+        return bipartite;
+    }
+};
