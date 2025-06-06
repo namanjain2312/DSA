@@ -15,7 +15,7 @@ vector<int> computeLPS(string &pattern) {
             lps[i] = len;
             i++;
         } else {
-            if (len != 0) {
+            if (ln != 0) {
                 // Instead of starting over, use the previous LPS value
                 len = lps[len - 1];
             } else {

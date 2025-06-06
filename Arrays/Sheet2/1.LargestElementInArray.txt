@@ -1,0 +1,22 @@
+1.LargestElementInArray
+
+Question Link - https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1
+
+Simple aprroach , take max from each element
+
+
+class Solution {
+  public:
+    int largest(vector<int> &arr)
+    {
+        int n=arr.size();
+        int ans=INT_MIN;
+
+        for(int i=0;i<n;i++)
+            ans=max(ans,arr[i]);
+
+        return ans;
+
+
+    }
+};

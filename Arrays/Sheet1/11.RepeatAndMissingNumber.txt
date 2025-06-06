@@ -1,3 +1,4 @@
+Link - https://www.interviewbit.com/problems/repeat-and-missing-number-array/
 11.RepeatAndMissingNumber
 
 #define ll           long long

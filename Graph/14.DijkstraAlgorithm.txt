@@ -1,6 +1,8 @@
 14.DijkstraAlgorithm
 
 Dijikstra Algorithm
+1>We could use the dijiktra in weighted directed graph , it could have cycle  also , but the only condition
+is that is should not have any negative cycle in it.
 1>The above algo is used to find and print the shortest path in a weighted undirected graph from a source
 to a point
 2>Also it helps to find the shortest dist from source to a node (Only value , not exaclty the path)

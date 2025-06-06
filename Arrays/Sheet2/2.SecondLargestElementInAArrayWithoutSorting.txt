@@ -1,0 +1,33 @@
+2.SecondLargestElementInAArrayWithoutSorting.txt
+
+Question Link - https://www.geeksforgeeks.org/problems/second-largest3735/1
+
+Simple approach
+
+
+class Solution {
+  public:
+    int getSecondLargest(vector<int> &arr)
+    {
+       int a,b,n=arr.size();
+       a=-1;
+       b=-1;
+
+       for(int i=0;i<n;i++)
+       {
+           if(a<arr[i])
+           {
+               b=a;
+               a=arr[i];
+           }
+           else if(a==arr[i])
+                ;
+           else
+           {
+               b=max(b,arr[i]);
+           }
+       }
+
+        return b;
+    }
+};

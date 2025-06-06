@@ -1,3 +1,6 @@
+Question Link - https://www.naukri.com/code360/problems/count-inversions_615?leftPanelTabValue=PROBLEM
+
+
 12.InversionOfArray(Pre-reqMerge Sort)
 
 #include <bits/stdc++.h>
