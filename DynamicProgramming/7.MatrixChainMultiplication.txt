@@ -1,0 +1,38 @@
+7.MatrixChainMultiplication
+
+Link - https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1
+
+
+
+class Solution {
+  public:
+
+    int recursion(int start,int end,vector<vector<int>>&dp,vector<int>&arr)
+    {
+        if(start==end)
+            return 0;
+        if(dp[start][end]!=-1)
+            return dp[start][end];
+
+        int mini=INT_MAX;
+        int a,b;
+
+        for(int k=start;k<=end-1;k++)
+        {
+            a=recursion(start,k,dp,arr);
+            b=recursion(k+1,end,dp,arr);
+
+            mini=min(mini,arr[start-1]*arr[k]*arr[end] + a+b);
+        }
+
+        dp[start][end]=mini;
+        return mini;
+    }
+    int matrixMultiplication(vector<int> &arr) {
+        int n=arr.size();
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        return recursion(1,n-1,dp,arr);
+
+
+    }
+};

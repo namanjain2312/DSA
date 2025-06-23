@@ -1,0 +1,38 @@
+1. Types
+   a.Ordered Set (set) – Balanced BST
+        Stores unique elements in sorted order (ascending by default).
+        Internally implemented as a Red-Black Tree.
+        Time complexity for insert, delete, and search is O(log n).
+        set<int> s;
+   b.Multiset
+        Allows duplicate elements in sorted order.
+        Same Red-Black Tree implementation.
+        multiset<int> ms;
+   c.Unordered Set
+         Stores unique elements with no guaranteed order.
+         Internally uses a Hash Table.
+         Average time complexity: O(1) for insert, delete, find.
+         Worst-case: O(n) (rare with good hash functions).
+         unordered_set<int> us;
+
+2. Traversal in Set
+    set<int> s;
+    for (auto item : s)
+        cout << item << " ";
+        or
+    for (auto &item : s)
+            cout << item << " ";
+
+2. Binary Search In Set
+    auto it = s.lower_bound(10);
+    if (it != s.end())
+        cout << *it;
+
+    auto it = s.upper_bound(10);
+    if (it != s.end())
+        cout << *it;
+
+3. Count of Elements Less Than a Key
+    int key = 10;
+    auto it = s.lower_bound(key);
+    int count = std::distance(s.begin(), it);

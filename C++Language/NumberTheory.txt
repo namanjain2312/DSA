@@ -1,0 +1,20 @@
+1. BitWise Operations
+   Bitwise AND (&)
+   bool a= true;
+   bool b= false;
+   bool c = a&b;
+
+   Bitwise OR (|)
+
+   Bitwise XOR (^)
+
+   Bitwise NOT (~)
+
+   Left Shift (<<)
+   The leftshift operator shifts the bits of an integer to the left by a specific number of
+   positions (as mentioned). This left shift operation is equivalent to multiplying the integer by
+   2 raised to the power of the number of positions shifted. The symbol used to represent the
+   left shift operator is <<.
+   Right Shift (>>)
+
+2.

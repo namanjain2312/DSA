@@ -1,0 +1,52 @@
+25.CourseScheduleII
+Problem Link - https://leetcode.com/problems/course-schedule-ii/description/
+
+Do a topo sort and just remeber while doing the topo sort save the node , and reverse the node if topo sort is possible
+
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int>out;
+        queue<int>bfs;
+        vector<vector<int>>adj(numCourses,vector<int>());
+        vector<int>indg(numCourses,0);
+        int temp,temp1;
+
+
+        for(int i=0;i<prerequisites.size();i++)
+        {
+            temp=prerequisites[i][0];
+            temp1=prerequisites[i][1];
+            adj[temp].push_back(temp1);
+            indg[temp1]++;
+        }
+
+        for(int i=0;i<numCourses;i++)
+        {
+            if(indg[i]==0)
+                bfs.push(i);
+        }
+
+        while(!bfs.empty())
+        {
+            temp=bfs.front();
+            out.push_back(temp);
+            bfs.pop();
+
+            for(int i=0;i<adj[temp].size();i++)
+            {
+                temp1=adj[temp][i];
+                indg[temp1]--;
+                if(indg[temp1]==0)
+                    bfs.push(temp1);
+            }
+        }
+        if(out.size()==numCourses)
+        {
+            reverse(out.begin(),out.end());
+            return out;
+        }
+        else
+            return vector<int>();
+    }
+};

@@ -1,0 +1,32 @@
+1>Minimum edges required to make a Directed Graph Strongly Connected
+
+
+2>Minimum edges required to make a UnDirected Graph Fully Connected are - N-1 (N- vertices)
+  If N vertices are there , then picking the right N-1 edges we could make an Undirected Graph Fully Connected
+  only clause is we are assuming that we are allowed to make an edge between any two vertices
+
+3>Minimum edges required to make a UnDirected Graph Fully Connected are (How to pick up those edges)
+4>Minimum edges required to make a Directed Graph Fully Connected are (How to pick up those edges)
+
+5>Maximum Edges that could be possible in the graph
+
+6>An edge in an undirected connected graph is a bridge if removing it disconnects the graph.
+For a disconnected undirected graph, the definition is similar, a bridge is an edge removal
+that increases the number of disconnected components.
+
+7>Total Degrees of all the nodes in the graph = 2* Number of Edges in undirectd graph
+
+8>We can represent a graph in two formats
+    a>(Adjancecy List) vector<vector<int>>adj(n,vector<int>()); in this total size would be used will be 2*E (E-number of edges) (N - number of nodes)
+    (In case of undirected graph ) (If graph directed total space used would be O(E))
+    In case of weighted graph store the pair i.e. vector<vector<pair<int,int>>>adj(n,vector<pair<int,int>>())
+    b>(Adjancecny Matrix) vector<vector<int>>adj(n,vector<int>(n,0)) ; in this total size would be used will be N*N (N- number of nodes)
+    In case of weighted graph store adj[i][j] = w and adj[j][i] = w (instead of 1 store w at position)
+
+
+
+Default Value of unorderred and ordered map elemetn ,
+ i.e m[key]++;
+ when key is not there then what will happend
+ and also is key is not there in map
+ then m[key] will return what?

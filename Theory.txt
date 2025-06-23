@@ -29,5 +29,28 @@ for a graph.
 21>To make an structuallay unique binary tree you always need an inorder + preorder/postorder , via
 inordder we decide left and right subtree anf via post/preorder we define the placement of root.
 22>If only pre and post order given then we cannot make structuraaly unique bainry tree.
-23>
+23>Inorder traversal of tree will alwasy return the sequentially leave node from left to right in a binary tree
+24>What is complete binary tree
+25>No of node in a complete binary tree = 2^h -1
+26>Full Binary Tree , Complete Binary Tree, Perfect Binary Tree, Balance Binary Tree, Degenerate Binary Tree
+27>Skwewed Binary Tree
+28>No of subarray in size N of array is N * (N + 1) / 2
+29>Connected Graphs
+30>Bipartite Graphs
+
+A graph is bipartite if the nodes can be partitioned into two independent sets A and B such that every edge in the graph connects a node in set A and a node in set B.
+
+A bipartite graph is that in which if we can color the grapjh in such a way that no two adhjaccent vertexes
+have the same color
+Linear graph is alwasys a biprartite graph
+=>Linear graph with no cycles are always bipartite
+Any graph wiht even cycle lenght can also be bipartite graph
+Any graph woth lenght off odd lenght cycle is not a birtatite graph
+
+
+
+All Possible Concetps to solve a question
+1>Two Pointers
+2>Sliding Window
+3>
 

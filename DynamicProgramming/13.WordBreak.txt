@@ -1,0 +1,34 @@
+13.Word Break
+
+Link - https://leetcode.com/problems/word-break/
+
+class Solution {
+public:
+
+    bool recursion(int index,vector<string>& wordDict,string &s,vector<int>&dp)
+    {
+        if(index==s.size())
+            return true;
+        if(dp[index]!=-1)
+            return dp[index];
+
+        bool ans=false;
+
+        for(int i=0;i<wordDict.size();i++)
+        {
+            if(s.size()-index>=wordDict[i].size() &&
+            s.substr(index,wordDict[i].size())==wordDict[i])
+                {
+                    ans=ans|recursion(index+wordDict[i].size(),wordDict,s,dp);
+                }
+        }
+        return dp[index]=ans;
+    }
+    bool wordBreak(string s, vector<string>& wordDict)
+    {
+        vector<int>dp(s.size(),-1);
+        return recursion(0,wordDict,s,dp);
+
+
+    }
+};

@@ -1,0 +1,32 @@
+1. Iterators
+        a. In C++, iterators are objects that allow you to traverse containers (like vector, map, set, etc.)
+           in a standardized way, similar to how pointers work.
+           They're a core part of the STL (Standard Template Library).
+           Iterators are not pointers
+        b. std::map<int, std::string>::iterator mit = m.begin();
+        c. auto mit = m.begin();
+        d. begin() / end() – Forward traversal
+        e. rbegin() / rend() – Reverse traversal
+        f. advance(it, n) – Moves the iterator forward by n positions
+        h. distance(start, end) – Returns the number of elements between two iterators
+        i. begin() - Returns an iterator pointing to the first element in the container.
+        j. end() - Returns an iterator pointing past the last element (not the last element itself)
+
+2. Auto
+        a. Auto is a type inference keyword introduced in C++11.
+           It automatically deduces the type of a variable at compile-time based on its initializer.
+           So its basically var keyword in c# or obj keyword in java
+           auto is generally used to define iterator as by default iterator are been defined by
+           std::map<int, std::string>::iterator mit = m.begin();
+           so instead of this we could simply declare mit as
+           auto mit = m.begin();
+
+3. Const
+        a. const int x = 5;
+           x = 10; // ❌ Error: cannot modify a const variable
+           Declares x as a read-only variable.
+           Must be initialized when declared.
+           Similar logic in const pointers
+
+4.
+

@@ -1,0 +1,57 @@
+4.NumberOfDistinctSubstringsInString
+
+Link - https://www.geeksforgeeks.org/problems/count-of-distinct-substrings/1
+
+/*You are required to complete this method */
+#include<bits/stdc++.h>
+struct Trie
+{
+    unordered_map<int,Trie*> v;
+    int count;
+
+    Trie()
+    {
+        count=0;
+    }
+};
+
+int ans=0;
+
+Trie* insert(Trie* temp,string &s,int index,int end)
+{
+    if(temp==nullptr)
+        temp=new Trie();
+    if(index==end+1)
+    {
+        if(temp->count==0)
+            ans++;
+        temp->count++;
+        return temp;
+    }
+    else
+    {
+        if(temp->v[s[index]-'a']==nullptr)
+            temp->v[s[index]-'a']=new Trie();
+        temp=temp->v[s[index]-'a'];
+        return insert(temp,s,index+1,end);
+    }
+}
+
+int countDistinctSubstrings(string s)
+{
+    Trie* root = new Trie();
+    Trie* temp;
+    ans=0;
+
+
+    for(int i=0;i<s.size();i++)
+    {
+        temp=root;
+        for(int j=i;j<s.size();j++)
+        {
+            temp=insert(temp,s,j,j);
+        }
+    }
+    return ans+1;
+
+}

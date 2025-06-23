@@ -1,0 +1,118 @@
+1>Taking an inline input(input where it has spaces but need to be inputted in one
+string Ex : 'My Name   Is    Naman Jain' take this input in one string ) use -
+string
+std::getline(cin,inputString)
+2>Split string using whitespaces (inputString have multiple words with random spaces
+Ex : 'My Name   Is    Naman Jain')
+vector<string>words;
+string word;
+std::istringstream iss(inputString);
+while(iss>>word)
+    words.push_back(word);
+
+3>Min Heap Priority Queue
+    a>In Pair
+        struct comp {
+                bool operator()(const pair<int, int>& p1, const pair<int, int>& p2) {
+                return p1.first > p2.first;
+            }
+        };
+        priority_queue<pair<int,int>,vector<pair<int,int>>,comp> pq;
+
+    b>In Pair
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+
+4>Map
+    m.insert({key,value});
+    m[key] to access value at a key
+    m.erase(key) to delete a key
+    if(m.find(key)!=m.end())
+        key found;
+
+5>Vector
+
+
+6>Linked List
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+
+7.
+Only valid in array , also check weather we could use a single standard comp in all the stl data types
+
+Sort it ascending order to second element , if second element is same then sort it according to first element but in
+descednming order
+
+Now comparator function return true or false in order saying that if its in a correct sorted order then return true
+otherwise return false;
+
+bool comp(pair<int,int>p1,pair<int,int>p2)
+{
+    if(p1.second<p2.second)
+        return true;
+    if(p1.second>p2.second)
+        return false;
+    if(p1.second==p2.second)
+    {
+        if(p1.first<p2.first)
+            return false;
+        else
+            return true;
+    }
+}
+
+
+vector<pair<int,int>>v;
+sort(v,v+n,comp);
+
+
+how to initialize a vector in c++ , map ,pair , set etc
+learn this
+
+
+Does BST contains only unique values ?
+
+What about if values are negative - 55. Jump Game
+
+
+ListNode *dummy=new ListNode();
+
+
+v1.insert(v1.end(), v2.begin(), v2.end());
+
+
+Important
+    count[i] = m.size() - std::distance(m.begin(), m.upper_bound(arr[i]));
+8.
+    static bool comp(pair<int,Job>p1,pair<int,Job>p2)
+    {
+        if(p1.first>=p2.first)
+            return false;
+        else
+            return true;
+    }
+
+
+vs
+
+    static bool comp(pair<int,Job>p1,pair<int,Job>p2)
+    {
+        if(p1.first>p2.first)
+            return false;
+        else
+            return true;
+    }
+
+vs
+
+return p1.first < p2.first;
+
+And this is strictly safe. It satisfies strict weak ordering perfectly.

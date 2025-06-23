@@ -1,0 +1,53 @@
+5.PalindromePartitioning
+
+Problem Link - https://leetcode.com/problems/palindrome-partitioning/description/
+
+class Solution {
+public:
+    bool isPalindrome(string input)
+    {
+        int i=0;
+        int j=input.size()-1;
+        while(j>i)
+        {
+            if(input[j]!=input[i])
+                return false;
+            j--;
+            i++;
+        }
+        return true;
+    }
+
+    vector<vector<string>> out;
+
+    void recursion(vector<string>&v,string &s,int currIndex)
+    {
+        if(currIndex==s.size())
+        {
+            if(v.size()>0)
+                out.push_back(v);
+            else
+                return ;
+        }
+
+        int i=1;
+
+        while(s.size()-currIndex >= i)
+        {
+            if(isPalindrome(s.substr(currIndex,i)))
+            {
+                v.push_back(s.substr(currIndex,i));
+                recursion(v,s,currIndex+i);
+                v.pop_back();
+            }
+            i++;
+        }
+        return ;
+    }
+
+    vector<vector<string>> partition(string s) {
+        vector<string>v;
+        recursion(v,s,0);
+        return out;
+    }
+};

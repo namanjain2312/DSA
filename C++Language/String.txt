@@ -1,0 +1,23 @@
+String
+
+1. string temp = "Naman";
+2. temp.push_back();
+3. temp.pop_back();
+4. temp.size();
+5. string find() is a built-in library function used to find the first
+   occurrence of a substring in the given string.
+   string s = "Welcome to GfG!";
+   string sub = "to";
+   cout << s.find(sub);
+   Out - 8
+6. s.clear()
+7. substr(pos, len);
+   position is the position from where we need in terms of index and len is size of substring
+   if len not passed then by default it will return from pos to last element(size)
+8. to_string(val)  to convert int to string
+9. string to integer
+   stoi()
+   stoi(str, position, base);
+   str: string to be converted. (compulsory)
+   position: starting position. (optional with default value = 0)
+   base: base of the number system. (optional with default value = 10)

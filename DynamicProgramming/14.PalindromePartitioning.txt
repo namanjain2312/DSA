@@ -1,0 +1,44 @@
+14.PalindromePartitioning
+
+Link - https://leetcode.com/problems/palindrome-partitioning-ii/
+
+
+class Solution {
+public:
+    bool isPalindrome(string &input,int i,int j)
+    {
+        while(j>i)
+        {
+            if(input[j]!=input[i])
+                return false;
+            j--;
+            i++;
+        }
+        return true;
+    }
+
+
+    int recursion(string &s,int currIndex,vector<int>&dp)
+    {
+        if(currIndex==s.size())
+            return 0;
+        else if(dp[currIndex]!=-1)
+            return dp[currIndex];
+
+        int i=1;
+        int ans=INT_MAX;
+        while(s.size()-currIndex >= i)
+        {
+            if(isPalindrome(s,currIndex,i+currIndex-1))
+                ans=min(ans,1+recursion(s,currIndex+i,dp));
+            i++;
+        }
+        return dp[currIndex]=ans;
+    }
+
+    int minCut(string s) {
+        vector<int>dp(s.size(),-1);
+        return recursion(s,0,dp)-1;
+
+    }
+};

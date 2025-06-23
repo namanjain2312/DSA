@@ -1,0 +1,80 @@
+Maps
+
+1. Types of maps
+    a. Ordered Map (Balanced BST)
+        Keys are sorted in ascending order (by default using <)
+        Internally implemented as a Red-Black Tree
+        Logarithmic time for insertion, deletion, and lookup
+        map<int, int> m;
+    b. Multimap
+        Same as map, but allows multiple elements with the same key
+        multimap<int, int> mm;
+    c. Unordered_Map (Hash Map) (No Order)
+        Keys are not sorted
+        Internally uses hash tables
+        Average O(1) time for insertion, deletion, and access
+        Worst-case O(n) (very rare with good hash functions)
+        unordered_map<int,int> um;
+
+1. Traversal in Map
+      map<int,int> m ;
+      for(auto &item : m)
+          cout<<"Key is " << item.first <<" Value is "<< item.second;
+      The above syntax do not create a copy , and thus help to directly modify the map , its basically called
+      via reference
+
+      for(auto item : m)
+        cout<<"Key is " << item.first <<" Value is "<< item.second;
+      The above syntax creates a copy of it .
+
+      for (auto i = m.begin(); i != m.end(); i++) {
+          cout << "Key is " << i->first << " and Value is " << i->second << endl;
+      }
+
+2. Inserting elements in Maps
+   m.insert({1,10});
+
+3. Accessing and Finding Elements
+   auto it = m.find(ele);
+   if(it!=m.end())
+        cout<<"Value is "<<it->second;
+
+4. Deleting Elements
+    auto it = m.find(key);
+    m.erase(it);
+        or
+    m.erase(keyValue);
+
+5. Size of map
+    m.size();
+
+6. Clear whole map
+   m.clear();
+
+7. Binary search in map
+   The map lower_bound() function returns an iterator to the key which is just greater or equal to the given key.
+   auto it = m.lower_bound(key);
+   if (it != m.end() && it->first == key)
+           cout << it->second;
+
+   The map upper_bound() method returns an iterator to the key which is just greater than given key.
+   If the element with the given key exists, it will be present just before this element pointed by this iterator.
+   auto it = m.upper_bound(key);
+   it--;
+   if (it->first == key)
+       cout << it->second;
+
+8. Find how many elements in a map are less than a given key.
+   int key = 10;
+   auto it = m.lower_bound(key);
+   int count = std::distance(m.begin(), it);
+
+9. normal lower bound and upper bound function do not work in map , we need to explicity use the map's member
+    function for the same , those lower and upper bound function works in vector only
+10. similary normal subtracting lowerbound wiht m.begin() will not work , that work in vector only
+
+11. For getting prev and next elements
+    auto prev_it = std::prev(it);
+    auto next_it = std::next(it);
+
+

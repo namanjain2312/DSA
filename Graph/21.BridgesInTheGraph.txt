@@ -1,0 +1,5 @@
+Bridges in the graph
+
+1>Maintain a  time insertion array - t[]
+2>Maintain a lowest time insertion of all adjacent node apart from the parent
+3>Also maintain a vis array

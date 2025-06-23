@@ -1,0 +1,36 @@
+11. Rod Cutting
+
+Problem Link - https://leetcode.com/problems/minimum-cost-to-cut-a-stick/
+
+class Solution {
+public:
+
+    long long recursion(int left,int right,vector<vector<long long>>&dp,vector<int>& cuts)
+    {
+        if(left==right)
+            return 0;
+        if(dp[left][right]!=-1)
+            return dp[left][right];
+
+        long long  mini=LLONG_MAX;
+
+        for(int i=left+1;i<right;i++)
+        {
+            mini=min(mini,(long long)cuts[right]-cuts[left]+recursion(left,i,dp,cuts) + recursion(i,right,dp,cuts));
+        }
+        if(mini==LLONG_MAX)
+            return dp[left][right]=0;
+        return dp[left][right]=mini;
+    }
+
+    int minCost(int n, vector<int>& cuts) {
+
+        vector<vector<long long>>dp(105,vector<long long>(105,-1));
+        cuts.push_back(0);
+        cuts.push_back(n);
+
+        sort(cuts.begin(),cuts.end());
+
+        return recursion(0,cuts.size()-1,dp,cuts);
+    }
+};

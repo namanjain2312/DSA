@@ -1,0 +1,54 @@
+1.EmployeeFreeTime
+
+Link - https://www.naukri.com/code360/problems/employee-free-time_1171181
+
+#include<bits/stdc++.h>
+
+vector<int> findFreeIntervals(vector<vector<int>> &schedules)
+{
+	vector<int>ans;
+	map<int,int>m;
+	int currOverlap=0;
+	int mex = pow(10,8);
+
+	for(int i=0;i<schedules.size();i++)
+	{
+		for(int j=0;j<schedules[i].size();j++)
+		{
+			if(j%2==0)
+				m[schedules[i][j]]++;
+			else
+				m[schedules[i][j]]--;
+		}
+	}
+
+	if(m.find(0)==m.end())
+	{
+		ans.push_back(0);
+		ans.push_back(m.begin()->first-1);
+	}
+
+	for(auto i = m.begin() ; i!= m.end(); i++)
+	{
+		currOverlap+=i->second;
+		auto nextP = next(i);
+
+		if(currOverlap==0 && nextP!=m.end() && nextP->first!= i->first+1)
+		{
+			ans.push_back(i->first+1);
+			ans.push_back(nextP->first-1);
+		}
+	}
+
+	if(m.find(mex)==m.end())
+	{
+		auto ending = m.end();
+		ending--;
+		ans.push_back(ending->first+1);
+		ans.push_back(mex);
+	}
+
+
+	return ans;
+
+}

@@ -1,0 +1,84 @@
+15.MaximumProfitInJobScheduling
+
+Link - https://leetcode.com/problems/maximum-profit-in-job-scheduling/
+
+class Solution {
+public:
+
+    struct Job
+    {
+        int startTime;
+        int endTime;
+        int profit;
+    };
+
+    static bool comp(pair<int,Job>p1,pair<int,Job>p2)
+    {
+        if(p1.first>=p2.first)
+            return false;
+        else
+            return true;
+    }
+
+    int search(vector<pair<int,Job>>&v,int currTime)
+    {
+        int low=0;
+        int high=v.size()-1;
+        int mid;
+        int out=-1;
+
+        while(low<=high)
+        {
+            mid=(high-low)/2 + low;
+            if(v[mid].first>=currTime)
+            {
+                out=mid;
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return out;
+    }
+
+    int recursion(int currIndex,vector<int>&dp,vector<pair<int,Job>>&v)
+    {
+        if(currIndex==v.size() || currIndex==-1)
+            return 0;
+
+        if(dp[currIndex]!=-1)
+            return dp[currIndex];
+
+        int picked=0;
+        int notPicked=0;
+
+        int i = search(v,v[currIndex].second.endTime);
+
+        picked = v[currIndex].second.profit+ recursion(i,dp,v);
+        notPicked = recursion(currIndex+1,dp,v);
+
+        return dp[currIndex]=max(picked,notPicked);
+    }
+
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit)
+    {
+        int n=startTime.size();
+        vector<int>dp(n,-1);
+        vector<pair<int,Job>>v(n);
+
+        for(int i=0;i<n;i++)
+        {
+            Job job;
+            job.startTime = startTime[i];
+            job.endTime = endTime[i];
+            job.profit = profit[i];
+            v[i]= {startTime[i],job};
+        }
+        sort(v.begin(),v.end(),comp);
+
+        return recursion(0,dp,v);
+
+    }
+};

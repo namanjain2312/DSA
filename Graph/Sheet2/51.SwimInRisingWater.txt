@@ -1,0 +1,115 @@
+51.SwimInRisingWater
+
+Problem Link - https://leetcode.com/problems/swim-in-rising-water/
+
+Do It again by the second approach also
+
+//Approach 2 Binary Search
+
+class Solution {
+public:
+
+    bool findAns(vector<vector<int>>&grid,int ans)
+    {
+
+    }
+
+    int swimInWater(vector<vector<int>>& grid) {
+        int low,high;
+        int n=grid.size();
+        int low=INT_MAX;
+        int high=INT_MIN;
+
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                low=min(grid[i][j],low);
+                high=max(grid[i][j],high);
+            }
+        }
+
+
+    }
+};
+
+// //Approach 1 Dijiktra
+// class Solution {
+// public:
+
+//     struct Node
+//     {
+//         int val;
+//         int row;
+//         int col;
+
+//         Node(int v,int r,int c)
+//         {
+//             val=v;
+//             row=r;
+//             col=c;
+//         }
+//     };
+
+//     struct comp{
+//         bool operator()(const Node &n1,const Node &n2)
+//         {
+//             return n1.val>n2.val;
+//         }
+//     };
+
+//     int swimInWater(vector<vector<int>>& grid)
+//     {
+//         priority_queue<Node,vector<Node>,comp>pq;
+//         int pos;
+//         int newVal;
+//         int n=grid.size();
+//         vector<int>vis(n*n,INT_MAX);
+//         int rr,cc,vv;
+
+
+//         pq.push(Node(grid[0][0],0,0));
+
+//         while(!pq.empty())
+//         {
+//             Node temp=pq.top();
+//             pq.pop();
+//             rr=temp.row;
+//             cc=temp.col;
+//             vv=temp.val;
+
+//             pos=rr*n + cc;
+
+//             if(vis[pos]<=vv)
+//                 continue;
+//             else
+//             {
+//                 vis[pos]=vv;
+//                 if(rr+1<n)
+//                 {
+//                     newVal=max(grid[rr+1][cc],vv);
+//                     pq.push(Node(newVal,rr+1,cc));
+//                 }
+//                 if(rr-1>=0)
+//                 {
+//                     newVal=max(grid[rr-1][cc],vv);
+//                     pq.push(Node(newVal,rr-1,cc));
+//                 }
+//                 if(cc+1<n)
+//                 {
+//                     newVal=max(grid[rr][cc+1],vv);
+//                     pq.push(Node(newVal,rr,cc+1));
+//                 }
+//                 if(cc-1>=0)
+//                 {
+//                     newVal=max(grid[rr][cc-1],vv);
+//                     pq.push(Node(newVal,rr,cc-1));
+//                 }
+//             }
+//         }
+
+//         return vis[n*n-1];
+
+//     }
+// };

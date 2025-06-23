@@ -1,0 +1,41 @@
+12. Egg Dropping Problem
+
+Link - https://www.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1
+
+class Solution {
+public:
+    int recursion(int eggs, int floors, vector<vector<int>>& dp) {
+        if (floors == 0 || floors == 1)
+            return floors;
+        if (eggs == 1)
+            return floors;
+        if (dp[eggs][floors] != -1)
+            return dp[eggs][floors];
+
+        int low = 1, high = floors;
+        int mini = INT_MAX;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            int eggBreaks = recursion(eggs - 1, mid - 1, dp);
+            int eggDoesNotBreak = recursion(eggs, floors - mid, dp);
+            int worst = 1 + max(eggBreaks, eggDoesNotBreak);
+
+            if (eggBreaks > eggDoesNotBreak) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+
+            mini = min(mini, worst);
+        }
+
+        return dp[eggs][floors] = mini;
+    }
+
+    int eggDrop(int k, int n) {
+        vector<vector<int>> dp(k + 1, vector<int>(n + 1, -1));
+        return recursion(k, n, dp);
+    }
+};
