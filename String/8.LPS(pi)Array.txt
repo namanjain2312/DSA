@@ -2,8 +2,11 @@
 class Solution {
 public:
 
-    // Function to compute the Longest Prefix Suffix (LPS) array
+    // Function to compute the Longest Prefix Suffix (LPS) array`
 vector<int> computeLPS(string &pattern) {
+
+    if (pattern.empty()) return 0;
+
     int m = pattern.size();
     vector<int> lps(m, 0); // lps[0] is always 0
     int len = 0;          // length of the previous longest prefix suffix
@@ -15,7 +18,7 @@ vector<int> computeLPS(string &pattern) {
             lps[i] = len;
             i++;
         } else {
-            if (ln != 0) {
+            if (len != 0) {
                 // Instead of starting over, use the previous LPS value
                 len = lps[len - 1];
             } else {
@@ -47,6 +50,8 @@ vector<int> computeLPS(string &pattern) {
         if (j == m) {
             return i - j;
             // Use the LPS array to continue searching for the next possible match
+            //count++;
+            //out.push_back(i - j);
             //j = lps[j - 1];
         }
         // Mismatch after j matches
