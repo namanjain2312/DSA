@@ -1,0 +1,9 @@
+1>
+If
+ a XOR b = c
+then
+ b XOR c = a
+and
+ c XOR a = b
+
+2>

@@ -2,10 +2,6 @@
 class Solution {
 public:
     string longestCommonPrefix(vector<string>& strs) {
-        //Vaise to most optimized approach for a very large subset is trie
-        //But the second most optimized approach is to do the vertical scan
-        //And we will use vertical scan itself in this case
-
         string out;
         char c;
         int index = 0;

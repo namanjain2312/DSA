@@ -2,31 +2,24 @@
 
 class Solution {
   public:
-    int maxLen(vector<int>& arr) {
-        int n=arr.size();
-        vector<int>preSum(n);
+    int maxLength(vector<int>& arr) {
         map<int,int>m;
-        int count=0;
+        int sum=0;
+        int out=0;
 
-        preSum[0]=arr[0];
-        for(int i=1;i<n;i++)
-            preSum[i]=preSum[i-1]+arr[i];
 
-        for(int i=n-1;i>=0;i--)
+        for(int i=0;i<arr.size();i++)
         {
-            if(m.find(preSum[i])==m.end())
-                m[preSum[i]]=i;
+            sum+=arr[i];
+            if(sum==0)
+                out=max(i+1,out);
+            if(m.find(sum)==m.end())
+                m[sum]=i;
+
+            out=max(out,i-m[sum]);
+
         }
-
-        for(int i=0;i<n;i++)
-        {
-            count=max(count,m[preSum[i]]-i);
-            if(preSum[i]==0 && m.find(0)!=m.end())
-                count=max(count,m[0]+1);
-        }
-
-        return count;
-
+        return out;
 
     }
 };

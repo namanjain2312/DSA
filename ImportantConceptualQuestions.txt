@@ -1,2 +1,10 @@
 1. 454. 4Sum II - https://leetcode.com/problems/4sum-ii/description/
 2. 3085. Minimum Deletions to Make String K-Special
+3. 2014. Longest Subsequence Repeated k Times
+4. Cut the tree (Dp on graph)
+    https://www.hackerrank.com/challenges/cut-the-tree/problem
+5. 1353. Maximum Number of Events That Can Be Attended
+6.1751. Maximum Number of Events That Can Be Attended II
+7.3439. Reschedule Meetings for Maximum Free Time I
+8.3440. Reschedule Meetings for Maximum Free Time II
+9.

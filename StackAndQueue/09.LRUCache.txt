@@ -4,88 +4,96 @@
 class LRUCache {
 public:
 
+
     struct Node
     {
-        Node* left=nullptr;
-        Node* right=nullptr;
-        int key;
+        Node* nextPtr;
+        Node* prevPtr;
         int val;
+        int key;
+        Node(int k,int v)
+        {
+            nextPtr = nullptr;
+            prevPtr= nullptr;
+            val=v;
+            key=k;
+        }
     };
 
-    map<int,Node*> m ;
-    int capacityOfCache = 0;
+        int len;
     Node* start;
     Node* end;
-
-    void AssigningNodeToEnd(Node* node)
-    {
-        node->right=end;
-        node->left=end->left;
-        end->left->right = node;
-        end->left=node;
-    }
-
-    void RemoveANode(Node* node)
-    {
-        node->left->right=node->right;
-        node->right->left=node->left;
-    }
-
-    void DeleteFirstNode()
-    {
-        Node* nodeToDelete;
-        nodeToDelete = start->right;
-        start->right = nodeToDelete->right;
-        nodeToDelete->right->left = start;
-        m.erase(nodeToDelete->key);
-        delete nodeToDelete;
-    }
+    map<int,Node*>m;
 
     LRUCache(int capacity) {
 
-        capacityOfCache = capacity;
-        for(auto i : m)
-        {
-            delete i.second;
-        }
+        start=new Node(0,0);
+        end = new Node(0,0);
+        start->nextPtr=end;
+        end->prevPtr=start;
+        len=capacity;
         m.clear();
-        start=new Node();
-        end=new Node();
-        start->right=end;
-        end->left=start;
+    }
+
+    Node* removeNode(Node* node)
+    {
+        Node* prevNode=node->prevPtr;
+        Node* nextNode = node->nextPtr;
+        prevNode->nextPtr = nextNode;
+        nextNode->prevPtr = prevNode;
+        node->prevPtr = nullptr;
+        node->nextPtr = nullptr;
+        return node;
+    }
+
+    void putNodeInFront(Node* node)
+    {
+        Node* temp=start->nextPtr;
+        start->nextPtr = node;
+        node->prevPtr=start;
+        node->nextPtr = temp;
+        temp->prevPtr=node;
+
     }
 
     int get(int key) {
-
-        if(m.find(key)!=m.end())
-        {
-            RemoveANode(m[key]);
-            //Assigning m[key] at last place
-            AssigningNodeToEnd(m[key]);
-            return m[key]->val;
-        }
-        else
+        if(m.find(key)==m.end())
             return -1;
+        else
+        {
+            Node* nodeRemoved = removeNode(m[key]);
+            putNodeInFront(nodeRemoved);
+            return nodeRemoved->val;
+        }
     }
 
-    void put(int key, int value) {
 
-        if(m.find(key)!=m.end())
-        {
-            m[key]->val = value;
-            RemoveANode(m[key]);
-            AssigningNodeToEnd(m[key]);
+
+    void put(int key, int value)
+    {
+        // ✅ If key already exists, update value and move to front
+        if (m.find(key) != m.end()) {
+            Node* existing = m[key];
+            existing->val = value;
+            removeNode(existing);
+            putNodeInFront(existing);
+            return;
         }
-        else
-        {
-            if(m.size()==capacityOfCache)
-                DeleteFirstNode();
-            Node* tempNode = new Node();
-            tempNode->key = key;
-            tempNode->val = value;
-            m[key]=tempNode;
-            AssigningNodeToEnd(tempNode);
+
+        // ✅ Key does not exist
+        if (m.size() == len) {
+            // Remove LRU node from list and map
+            Node* lru = end->prevPtr;
+            removeNode(lru);
+            m.erase(lru->key);
+            delete lru;
         }
+
+        // Insert new node
+        Node* node = new Node(key, value);
+        putNodeInFront(node);
+        m[key] = node;
+
     }
 };
 

@@ -1,32 +1,37 @@
 1.ReverseWordsInAString
+
 class Solution {
 public:
-    string reverseWords(string inputString) {
-        string out;
-        string temp;
-        int n=inputString.size()-1;
+    string reverseWords(string s)
+    {
+        string out="";
+        int j=s.size()-1;
+        string temp="";
 
-        while(n>=0)
+        while(j>=0)
         {
-            if(inputString[n]==' ')
+            if(s[j]==' ' && temp=="")
+                ;
+            else if(s[j]==' ' && temp!="")
             {
-                n--;
-                continue;
-            }
-            else
-            {
-                while(n>=0 && inputString[n]!=' ')
-                {
-                    temp.push_back(inputString[n]);
-                    n--;
-                }
                 reverse(temp.begin(),temp.end());
-                out=out+temp+" ";
+                out+=temp+" ";
                 temp="";
             }
+            else
+                temp.push_back(s[j]);
+            j--;
         }
 
+        if(temp!="")
+        {
+            reverse(temp.begin(),temp.end());
+            out+=temp+" ";
+            temp="";
+        }
         out.pop_back();
+
         return out;
+
     }
 };

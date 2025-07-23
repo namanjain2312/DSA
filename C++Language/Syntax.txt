@@ -116,3 +116,8 @@ vs
 return p1.first < p2.first;
 
 And this is strictly safe. It satisfies strict weak ordering perfectly.
+
+10. how to take multple min or max at one time as by default max function only allows two arguements
+    min({a,b,c,d});
+
+

@@ -17,4 +17,6 @@
    left shift operator is <<.
    Right Shift (>>)
 
+   Always use brackets >> and  << as due to avoid BODMAS errrors
+
 2.
