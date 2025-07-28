@@ -1,0 +1,150 @@
+#include <bits/stdc++.h>
+
+
+struct TrieNode
+{
+    vector<TrieNode*> itr;
+    char val;//character
+    int countOfWordsEqualTo=0;//count of word equal to this word
+    int countOfWordsStartingWith=0;//count of words having this prefix
+
+    TrieNode(char val)
+    {
+        this->val=val;
+        this->countOfWordsEqualTo=0;
+        this->countOfWordsStartingWith=0;
+        for(int i=0;i<26;i++)
+            this->itr.push_back(nullptr);
+    }
+};
+
+class Trie
+{
+    TrieNode *head=nullptr;
+    public :
+        Trie()
+        {
+            clear(head);
+            head=new TrieNode('a');
+        }
+
+        //Insert a word in trie
+        void insert(string word)
+        {
+            TrieNode *curr=head;
+            int i=0;
+
+            while(i<word.size())
+            {
+                //Case when no trie node is there
+                if(curr->itr[word[i]-'a']==nullptr)
+                    curr->itr[word[i]-'a']=new TrieNode(word[i]);
+
+                //Case when the word end
+                if(i==word.size()-1)
+                    curr->itr[word[i]-'a']->countOfWordsEqualTo++;
+
+                //Case for counting prefix
+                curr->itr[word[i]-'a']->countOfWordsStartingWith++;
+
+                //Traversal
+                curr=curr->itr[word[i]-'a'];
+
+                i++;
+            }
+        }
+
+
+        //Search and tell how occusrance of the  word
+        int countWordsEqualTo(string word)
+        {
+            TrieNode *curr=head;
+            int i=0;
+
+            while(i<word.size())
+            {
+                if(curr->itr[word[i]-'a']==nullptr)
+                    return 0;
+                else
+                    curr=curr->itr[word[i]-'a'];
+                i++;
+            }
+            return curr->countOfWordsEqualTo;
+        }
+
+
+        //Occurance of  the given prefix
+        int countWordsStartingWith(string prefix)
+        {
+            TrieNode *curr=head;
+            int i=0;
+
+            while(i<prefix.size())
+            {
+                if(curr->itr[prefix[i]-'a']==nullptr)
+                    return 0;
+                else
+                    curr=curr->itr[prefix[i]-'a'];
+                i++;
+            }
+            return curr->countOfWordsStartingWith;
+        }
+
+        //Delete a single word , and extra nodes and adjust the count of occurance
+        void erase(string word)
+        {
+            TrieNode *curr=head;
+            vector<pair<TrieNode*, int>> path; // stores (node, index in itr)
+
+            // Traverse the trie and record the path
+            for (int i = 0; i < word.size(); i++) {
+                path.push_back({curr, word[i] - 'a'});
+                curr = curr->itr[word[i] - 'a'];
+                curr->countOfWordsStartingWith--;
+            }
+
+            // Decrement the word-end count
+            curr->countOfWordsEqualTo--;
+
+
+            // Now go backwards and clean up unused nodes
+            for (int i = word.size() - 1; i >= 0; i--) {
+                TrieNode* parent = path[i].first;
+                int idx = path[i].second;
+                TrieNode* node = parent->itr[idx];
+
+                // Check if node has any non-null children
+                bool hasChildren = false;
+                for (int j = 0; j < 26; j++) {
+                    if (node->itr[j] != nullptr) {
+                        hasChildren = true;
+                        break;
+                    }
+                }
+
+
+                // If the node is no longer needed, delete it
+                if (node->countOfWordsEqualTo == 0 &&
+                    node->countOfWordsStartingWith == 0 &&
+                    !hasChildren) {
+                    delete node;
+                    parent->itr[idx] = nullptr;
+                } else {
+                    // Stop cleanup if node is still in use
+                    break;
+                    }
+            }
+        }
+
+        //Delete and clear whole Trie
+        void clear(TrieNode* node) {
+            if (node==nullptr)
+                return;
+            for (int i=0;i<26;i++)
+                clear(node->itr[i]);
+            delete node;
+        }
+};
+
+
+

@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Employee
+{
+    private:
+        int a,b,c;
+    public:
+        int e,d;
+        void setData(int a,int b,int c);//only declartion done here
+        //could be implemented later on also
+        void getData()
+        {
+            cout<<"Value of a b c "<<a<<b<<c<<"\n";
+        }
+};
+
+void Employee :: setData(int a,int b,int c)
+{
+    this->a=a;
+    this->b=b;
+    this->c=c;
+}
+
+int main() {
+    Employee naman;
+    naman.setData(1,2,3);
+
+    naman.getData();
+
+    return 0;
+}

@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Employee
+{
+    int employeeId;
+    float salary;
+
+
+};
+
+int main() {
+    Employee naman;
+    naman.employeeId = 1;
+    naman.salary = 50000;
+
+	cout<<naman.salary<<"\n";
+}
+/*
+The above is the simple implementation of Struct and using Struct
+, Now i can use typedef also so that instead of writing full Employee
+i could just use Ep
+*/
+typedef struct Employee
+{
+    int employeeId;
+    float salary;
+
+
+} Ep;
+
+int main() {
+    Ep naman;
+    naman.employeeId = 1;
+    naman.salary = 50000;
+
+	cout<<naman.salary<<"\n";
+}

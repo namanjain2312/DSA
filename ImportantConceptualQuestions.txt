@@ -7,4 +7,5 @@
 6.1751. Maximum Number of Events That Can Be Attended II
 7.3439. Reschedule Meetings for Maximum Free Time I
 8.3440. Reschedule Meetings for Maximum Free Time II
-9.
+9.Shortest Unique Prefix For Every Word
+https://www.geeksforgeeks.org/problems/shortest-unique-prefix-for-every-word/1
