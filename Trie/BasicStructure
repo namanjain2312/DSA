@@ -1,9 +1,11 @@
+//Check its erase functonality also
+
 #include <bits/stdc++.h>
 
 
 struct TrieNode
 {
-    vector<TrieNode*> itr;
+    TrieNode* itr[26];
     char val;//character
     int countOfWordsEqualTo=0;//count of word equal to this word
     int countOfWordsStartingWith=0;//count of words having this prefix
@@ -14,7 +16,7 @@ struct TrieNode
         this->countOfWordsEqualTo=0;
         this->countOfWordsStartingWith=0;
         for(int i=0;i<26;i++)
-            this->itr.push_back(nullptr);
+            this->itr[i]=nullptr;
     }
 };
 

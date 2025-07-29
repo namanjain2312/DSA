@@ -1,107 +1,109 @@
-3.Longest String with All Prefixes
-
 #include <bits/stdc++.h>
-struct Node{
 
-    private :
-        Node* links[26];
-        bool isWordEndsWith;
+Lnk - https://www.naukri.com/code360/problems/complete-string_2687860?leftPanelTabValue=SUBMISSION
+struct TrieNode
+{
+    vector<TrieNode*> itr;
+    char val;//character
+    int countOfWordsEqualTo=0;//count of word equal to this word
+    int countOfWordsStartingWith=0;//count of words having this prefix
 
-    public :
-    Node()
+    TrieNode(char val)
     {
+        this->val=val;
+        this->countOfWordsEqualTo=0;
+        this->countOfWordsStartingWith=0;
         for(int i=0;i<26;i++)
-            links[i]=nullptr;
-        isWordEndsWith=false;
+            this->itr.push_back(nullptr);
     }
-
-    bool ContainsLetter(char c)
-    {
-        if(links[c-'a']!=nullptr)
-            return true;
-        else
-            return false;
-    }
-
-    Node* GetLetter(char c)
-    {
-        return links[c-'a'];
-    }
-
-    void PutLetter(char c)
-    {
-        links[c-'a'] = new Node();
-        return;
-    }
-    bool MarkAsWordEnd()
-    {
-        isWordEndsWith=true;
-    }
-    bool IsThisAWordEnd()
-    {
-        return isWordEndsWith;
-    }
-
 };
 
-class Trie{
-    private : Node* root;
+class Trie
+{
+    TrieNode *head=nullptr;
     public :
-
         Trie()
         {
-            root = new Node();
+            clear(head);
+            head=new TrieNode('a');
         }
-        void InsertListOfWord(vector<string> &listOfWords)
+
+        //Insert a word in trie
+        void insert(string word)
         {
-            Node* tempNode = nullptr;
-            for(int j=0;j<listOfWords.size();j++)
+            TrieNode *curr=head;
+            int i=0;
+
+            while(i<word.size())
             {
-                tempNode = root;
-                for(int i=0;i<listOfWords[j].size();i++)
-                {
-                    if(!tempNode->ContainsLetter(listOfWords[j][i]))
-                        tempNode->PutLetter(listOfWords[j][i]);
-                    tempNode=tempNode->GetLetter(listOfWords[j][i]);
-                }
-                tempNode->MarkAsWordEnd();
+                //Case when no trie node is there
+                if(curr->itr[word[i]-'a']==nullptr)
+                    curr->itr[word[i]-'a']=new TrieNode(word[i]);
+
+                //Case when the word end
+                if(i==word.size()-1)
+                    curr->itr[word[i]-'a']->countOfWordsEqualTo++;
+
+                //Case for counting prefix
+                curr->itr[word[i]-'a']->countOfWordsStartingWith++;
+
+                //Traversal
+                curr=curr->itr[word[i]-'a'];
+
+                i++;
             }
         }
 
-        bool CheckCompleteString(string &word)
+        bool checkCompleteness(string word)
         {
-            Node* tempNode = root;
-            for(int i=0;i<word.size();i++)
+            TrieNode *curr=head;
+            int i=0;
+
+            while(i<word.size())
             {
-                tempNode=tempNode->GetLetter(word[i]);
-                if(!tempNode->IsThisAWordEnd())
+                if(curr->itr[word[i]-'a']->countOfWordsEqualTo==0)
                     return false;
+
+                //Traversal
+                curr=curr->itr[word[i]-'a'];
+                i++;
             }
             return true;
         }
 
+        //Delete and clear whole Trie
+        void clear(TrieNode* node) {
+            if (node==nullptr)
+                return;
+            for (int i=0;i<26;i++)
+                clear(node->itr[i]);
+            delete node;
+        }
 };
 
 string completeString(int n, vector<string> &a){
-    Trie trie;
-    trie.InsertListOfWord(a);
-    string output = "";
+    Trie trie = Trie();
+    string ans="None";
 
-    for(int i=0;i<n;i++)
+
+    for(int i=0;i<a.size();i++)
+        trie.insert(a[i]);
+
+    for(int i=0;i<a.size();i++)
     {
-        if(trie.CheckCompleteString(a[i]))
+        if(trie.checkCompleteness(a[i]))
         {
-            if(a[i].size()>output.size())
-                output = a[i];
-            else if(a[i].size()==output.size())
-            {
-                if(a[i]<output)
-                    output=a[i];
-            }
+            if(ans=="None")
+                ans=a[i];
+            else if(ans.size()<a[i].size())
+                ans=a[i];
+            else if(ans.size()==a[i].size())
+                ans=min(a[i],ans);
         }
     }
-    if(output=="")
-        return "None";
-    else
-        return output;
+    return ans;
+
+
+
+
 }

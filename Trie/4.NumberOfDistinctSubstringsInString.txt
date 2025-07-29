@@ -2,56 +2,55 @@
 
 Link - https://www.geeksforgeeks.org/problems/count-of-distinct-substrings/1
 
-/*You are required to complete this method */
-#include<bits/stdc++.h>
-struct Trie
-{
-    unordered_map<int,Trie*> v;
-    int count;
+#include <bits/stdc++.h>
 
-    Trie()
+struct TrieNode
+{
+    TrieNode* itr[26];
+    char val;//character
+
+    TrieNode(char val)
     {
-        count=0;
+        this->val=val;
+        for(int i=0;i<26;i++)
+            this->itr[i]=nullptr;
     }
 };
 
-int ans=0;
 
-Trie* insert(Trie* temp,string &s,int index,int end)
-{
-    if(temp==nullptr)
-        temp=new Trie();
-    if(index==end+1)
-    {
-        if(temp->count==0)
-            ans++;
-        temp->count++;
-        return temp;
-    }
-    else
-    {
-        if(temp->v[s[index]-'a']==nullptr)
-            temp->v[s[index]-'a']=new Trie();
-        temp=temp->v[s[index]-'a'];
-        return insert(temp,s,index+1,end);
-    }
+
+// Helper function to recursively delete all nodes
+void clearTrie(TrieNode* node) {
+    if (node == nullptr)
+        return;
+    for (int i = 0; i < 26; ++i)
+        clearTrie(node->itr[i]);
+    delete node;
 }
 
-int countDistinctSubstrings(string s)
-{
-    Trie* root = new Trie();
-    Trie* temp;
-    ans=0;
 
+int countDistinctSubstring(string s) {
+    TrieNode *head=nullptr;
+    head=new TrieNode('a');
+
+    int ans=0;
 
     for(int i=0;i<s.size();i++)
     {
-        temp=root;
+        TrieNode* node=head;
+
         for(int j=i;j<s.size();j++)
         {
-            temp=insert(temp,s,j,j);
+            if(node->itr[s[j]-'a']==nullptr)
+            {
+                node->itr[s[j]-'a'] = new TrieNode(s[j]);
+                ans++;
+            }
+            node=node->itr[s[j]-'a'];
         }
     }
+
+    clearTrie(head); // clean up memory
     return ans+1;
 
 }
