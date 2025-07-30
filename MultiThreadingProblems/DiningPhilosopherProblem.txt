@@ -1,0 +1,73 @@
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <vector>
+#include <chrono>
+
+using namespace std;
+
+const int N = 5;  // Number of philosophers
+
+mutex forks[N];                 // One mutex per fork
+mutex semMutex;                 // Protect semaphore counter
+condition_variable semCV;
+int maxEating = N - 1;          // Only N - 1 philosophers allowed to eat at once
+
+// Acquire semaphore
+void wait_semaphore() {
+    unique_lock<mutex> lock(semMutex);
+    semCV.wait(lock, [] { return maxEating > 0; });
+    --maxEating;
+}
+
+// Release semaphore
+void signal_semaphore() {
+    unique_lock<mutex> lock(semMutex);
+    ++maxEating;
+    semCV.notify_one();
+}
+
+// Philosopher function
+void philosopher(int id) {
+    int left = id;
+    int right = (id + 1) % N;
+
+    while (true) {
+        // Thinking
+        cout << "Philosopher " << id << " is thinking." << endl;
+        this_thread::sleep_for(chrono::milliseconds(1000));
+
+        // Wait for permission to eat
+        wait_semaphore();
+
+        // Pick up forks
+        forks[left].lock();
+        forks[right].lock();
+
+        // Eating
+        cout << "Philosopher " << id << " is eating." << endl;
+        this_thread::sleep_for(chrono::milliseconds(1500));
+
+        // Put down forks
+        forks[right].unlock();
+        forks[left].unlock();
+
+        // Release semaphore
+        signal_semaphore();
+    }
+}
+
+int main() {
+    vector<thread> philosophers;
+
+    for (int i = 0; i < N; ++i) {
+        philosophers.push_back(thread(philosopher, i));
+    }
+
+    for (auto& p : philosophers) {
+        p.join();  // Optional: Let them run infinitely
+    }
+
+    return 0;
+}

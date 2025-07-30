@@ -1,0 +1,79 @@
+Certainly! The Producer-Consumer Problem (also called Bounded Buffer Problem) is a classic concurrency problem. It models a situation where:
+
+Producer: generates data and puts it into a buffer.
+
+Consumer: takes data from the buffer and processes it.
+
+Problem: Coordinate them safely when both access a shared bounded buffer.
+
+🔐 Goals:
+Prevent race conditions.
+
+Avoid buffer overflow (producer producing when buffer is full).
+
+Avoid buffer underflow (consumer consuming when buffer is empty).
+
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <queue>
+#include <chrono>
+
+using namespace std;
+
+const int MAX_BUFFER_SIZE = 5;
+queue<int> buffer;
+
+mutex mtx;
+condition_variable cv_producer;
+condition_variable cv_consumer;
+
+int item = 0;
+
+// Producer function
+void producer() {
+    while (true) {
+        unique_lock<mutex> lock(mtx);
+        cv_producer.wait(lock, []() { return buffer.size() < MAX_BUFFER_SIZE; });
+
+        // Produce item and add to buffer
+        buffer.push(++item);
+        cout << "Produced: " << item << endl;
+
+        // Notify consumer
+        cv_consumer.notify_one();
+
+        // Simulate work
+        this_thread::sleep_for(chrono::milliseconds(500));
+    }
+}
+
+// Consumer function
+void consumer() {
+    while (true) {
+        unique_lock<mutex> lock(mtx);
+        cv_consumer.wait(lock, []() { return !buffer.empty(); });
+
+        // Consume item from buffer
+        int consumed = buffer.front();
+        buffer.pop();
+        cout << "Consumed: " << consumed << endl;
+
+        // Notify producer
+        cv_producer.notify_one();
+
+        // Simulate processing
+        this_thread::sleep_for(chrono::milliseconds(1000));
+    }
+}
+
+int main() {
+    thread t1(producer);
+    thread t2(consumer);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}

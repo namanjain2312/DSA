@@ -2,8 +2,7 @@
 
 MST using Prim's Algo
 Spanning Tree - A tree in which we have n nodes and n-1 edges and all nodes are reachable from
-each other
-MST - Among all the Spanning Tree trees having minium sum of wights is the MST
+each otherMST - Among all the Spanning Tree trees having Minimum sum of wights is the MST
 
 A spanning tree is defined as a tree-like subgraph of a connected, undirected graph that includes all
 the vertices of the graph. Or, to say in Layman’s words, it is a subset of the edges of the graph
